@@ -313,6 +313,11 @@
 }
 
 
+.pt-0 {
+    padding-top: 0 !important;
+}
+
+
 /* ====================================================================
  * # NORMALIZE
  *
@@ -2830,7 +2835,7 @@ img.u-pull-left {
   font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
   line-height: 1.7;
   color: #333;
-  max-width: 600px;
+  /* max-width: 600px; */
   margin: 0 auto;
   padding: 2rem 1rem;
 }
@@ -4122,7 +4127,7 @@ img.u-pull-left {
     font-weight: 500;
     white-space: nowrap;
     /* overflow: hidden; */
-    border-right: 3px solid #333; /* typing cursor */
+    /* border-right: 3px solid #333;  */
     width: fit-content;
     animation: blinkCursor 0.7s step-end infinite;
     position: relative;
