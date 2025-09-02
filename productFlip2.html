@@ -1,996 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Elite Bowls Selection - Slider Tabs</title>
-<style>
-  /* Shared styles */
-  body, .elite-bowls-section {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f4f6f8;
-    color: #222;
-    line-height: 1.5;
-    margin: 0; 
-    padding: 0;
-  }
-  .elite-bowls-section {
-    padding: 2rem 0 4rem;
-  }
-  h1 {
-    font-weight: 800;
-    font-size: 2.75rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    letter-spacing: -0.04em;
-    color: #12343b;
-  }
-  .tabs {
-    display: flex;
-    justify-content: center;
-    gap: 4rem;
-    margin-bottom: 2rem;
-    user-select: none;
-  }
-  .tab-button {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #477a6d;
-    border-bottom: 3px solid transparent;
-    padding-bottom: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .tab-button.active {
-    color: #0c5f56;
-    border-color: #f09e00;
-  }
-  .tab-content {
-    display: none;
-    animation: fadeInTab 0.4s ease forwards;
-    outline: none;
-  }
-  .tab-content.active {
-    display: block;
-  }
-  @keyframes fadeInTab {
-    from {opacity: 0; transform: translateY(12px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
-
-  /* Slider Container with horizontal scroll */
-  .slider-container {
-    position: relative;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    max-width: 1000px;
-    margin: 0 auto;
-    scroll-snap-type: x mandatory;
-  }
-  .slider-track {
-    display: flex;
-    gap: 20px;
-  }
-  .slide {
-    scroll-snap-align: start;
-    flex: 0 0 calc(33.3333% - 13.3333px);
-    box-sizing: border-box;
-  }
-
-  /* Flip card styling */
-  .flip-card {
-    background: linear-gradient(180deg, #eaf2f2 0%, #d2e2e1 100%);
-    border-radius: 1rem;
-    box-shadow: 0 12px 28px rgb(13 51 55 / 0.15);
-    perspective: 1350px;
-    height: 420px;
-    user-select: none;
-    position: relative;
-    cursor: pointer;
-    outline: none;
-  }
-  .flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.85s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    transform-style: preserve-3d;
-    border-radius: 1rem;
-  }
-  .flip-card:hover .flip-card-inner,
-  .flip-card:focus .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-  .flip-card-front, 
-  .flip-card-back {
-    position: absolute;
-    border-radius: 1rem;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-  }
-  .flip-card-front {
-    z-index: 2;
-  }
-  .flip-image {
-    width: 100%;
-    height: 57%;
-    object-fit: cover;
-    user-select: none;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
-    box-shadow: inset 0 0 45px rgb(0 0 0 / 0.04);
-    transition: transform 0.6s ease-out;
-  }
-  .flip-card:hover .flip-image,
-  .flip-card:focus .flip-image {
-    transform: scale(1.04) rotate(0.8deg);
-  }
-  .card-front-content {
-    padding: 1.5rem 1.8rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.48rem;
-    flex: 1;
-  }
-  .card-front-content h3 {
-    font-weight: 800;
-    font-size: 1.4rem;
-    color: #0c5f56;
-    margin: 0;
-  }
-  .card-front-content p {
-    font-weight: 600;
-    color: #3b5150;
-    font-size: 0.97rem;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
-    flex-shrink: 0;
-  }
-  .card-front-content small {
-    color: #55706b;
-    font-weight: 500;
-    font-style: italic;
-    font-size: 0.86rem;
-    margin-top: auto;
-    user-select: none;
-  }
-  .flip-card-back {
-    background: linear-gradient(120deg,#0b4b45,#0c5f56);
-    color: #ecf7f5;
-    padding: 2.2rem 1.8rem 2rem;
-    text-align: left;
-    transform: rotateY(180deg);
-    justify-content: space-between;
-  }
-  .flip-card-back h3 {
-    margin-bottom: 1.2rem;
-    font-weight: 900;
-    font-size: 1.45rem;
-    letter-spacing: -0.01em;
-  }
-  .ingredients-list {
-    font-weight: 500;
-    font-size: 1rem;
-    line-height: 1.6;
-    border-left: 3px solid #f09e00;
-    padding-left: 1rem;
-    user-select: none;
-    margin-bottom: 2rem;
-    color: #f9d97e;
-  }
-  .ingredients-list b {
-    color: #ffd055;
-    font-weight: 700;
-  }
-  .order-button {
-    align-self: stretch;
-    background: #f09e00;
-    color: #10211a;
-    border: none;
-    padding: 14px 0;
-    border-radius: 8px;
-    font-size: 1.13rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgb(240 158 0 / 0.5);
-    transition: background-color 0.25s ease;
-    user-select: none;
-  }
-  .order-button:hover {
-    background: #ffc93c;
-    box-shadow: 0 8px 22px rgb(255 201 60 / 0.65);
-  }
-
-  /* Slider Navigation Buttons */
-  .slider-btn {
-    position: absolute;
-    top: 45%;
-    background: rgba(0,0,0,0.35);
-    border: none;
-    color: white;
-    font-size: 2.2rem;
-    cursor: pointer;
-    padding: 8px 15px;
-    border-radius: 50%;
-    z-index: 10;
-    transition: background 0.3s ease;
-    user-select: none;
-  }
-  .slider-btn:hover {
-    background: rgba(0,0,0,0.6);
-  }
-  .slider-btn.prev {
-    left: -10px;
-  }
-  .slider-btn.next {
-    right: -10px;
-  }
-
-  /* Ingredient sub-tabs */
-  .ingredient-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    user-select: none;
-  }
-  .ingredient-btn {
-    padding: 10px 22px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: #35584e;
-    background: #e9f2f0;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  .ingredient-btn.active,
-  .ingredient-btn:hover {
-    background: #f09e00;
-    color: white;
-  }
-
-  /* Ingredient tab slider container */
-  .ingredient-tab-content {
-    display: none;
-  }
-  .ingredient-tab-content.active {
-    display: block;
-  }
-
-  /* Responsive tweaks */
-  @media (max-width: 900px) {
-    .slide {
-      flex: 0 0 calc(50% - 15px);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Before/After Carousel</title>
+  <style>
+    body{
+      font-family:sans-serif;
+      background:#f4f4f4;
+      margin:0;
+      padding:2rem;
     }
-  }
-  @media (max-width: 600px) {
-    .slide {
-      flex: 0 0 calc(100% - 20px);
+
+    /* ===== CAROUSEL WRAPPER ===== */
+    .cmp-carousel {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.18), 0 6px 6px rgba(0,0,0,0.12);
+      background: #000;
     }
-    .slider-btn.prev {
-      left: 5px;
+    .cmp-track {
+      display: flex;
+      transition: transform 0.5s ease;
     }
-    .slider-btn.next {
-      right: 5px;
+    .cmp-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      background: #000;
     }
-  }
-</style>
+
+    /* ===== BEFORE/AFTER SLIDER PART ===== */
+    .cmp-wrapper{
+      width:100%;
+      height:400px;
+      position:relative;
+      overflow:hidden;
+      border-radius:12px;
+      background:#000;
+    }
+    @media (max-width: 768px){
+      .cmp-wrapper{ height: 60vw; }
+    }
+    .cmp-before,
+    .cmp-after{
+      width:100%;
+      height:100%;
+      position:absolute;
+      top:0; left:0;
+      overflow:hidden;
+      background:#fff;
+    }
+    .cmp-before img,
+    .cmp-after img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+    /* initially reveal 150px of 'after' */
+    .cmp-after{
+      clip-path: inset(0 calc(100% - 150px) 0 0);
+    }
+
+    /* draggable handle */
+    .cmp-scroller{
+      width:50px;
+      height:50px;
+      position:absolute;
+      left:150px;
+      top:50%;
+      transform:translateY(-50%);
+      border-radius:50%;
+      background-color: rgba(0,0,0,0.45);
+      border:5px solid #fff;
+      opacity:0.95;
+      cursor: ew-resize;
+      pointer-events:auto;
+      z-index:3;
+      transition: background-color .15s ease, opacity .15s ease, box-shadow .15s ease;
+      outline: none;
+    }
+    .cmp-scroller:hover,
+    .cmp-scroller.cmp-scrolling,
+    .cmp-scroller:focus{
+      background-color: rgba(0,0,0,0.65);
+      opacity:1;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    }
+    .cmp-scroller__thumb{
+      width:100%;
+      height:100%;
+      padding:6px;
+    }
+    .cmp-scroller:before,
+    .cmp-scroller:after{
+      content:"";
+      display:block;
+      width:7px;
+      height:9999px;
+      position:absolute;
+      left:50%;
+      margin-left:-3.5px;
+      z-index:2;
+      background:#fff;
+    }
+    .cmp-scroller:before{ top:100%; }
+    .cmp-scroller:after{ bottom:100%; }
+
+    /* ===== NAVIGATION BTNS ===== */
+    .nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: .3em .6em;
+      border-radius:50%;
+      z-index: 10;
+    }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+  </style>
 </head>
 <body>
-<section class="elite-bowls-section" aria-label="Elite Bowls Product and Ingredient Selection">
-  <main class="container" role="main" aria-label="Elite bowls menu with tabs">
-    <h1>Elite Bowls Selection</h1>
 
-    <!-- Main tabs -->
-    <nav class="tabs" role="tablist" aria-label="Bowl menu tabs">
-      <button 
-        role="tab" aria-selected="true" aria-controls="curated-tab"
-        id="curated-tab-btn" tabindex="0" 
-        class="tab-button active"
-        onclick="eliteSwitchTab(event, 'curated-tab')">Curated Bowls</button>
-      <button 
-        role="tab" aria-selected="false" aria-controls="custom-tab"
-        id="custom-tab-btn" tabindex="-1" 
-        class="tab-button"
-        onclick="eliteSwitchTab(event, 'custom-tab')">Make Your Own Bowl: Ingredients</button>
-    </nav>
+  <div class="cmp-carousel">
+    <div class="cmp-track">
 
-    <!-- Curated Bowls slider -->
-    <section id="curated-tab" role="tabpanel" tabindex="0" aria-labelledby="curated-tab-btn" class="tab-content active">
-
-      <div id="curated-slider-container" class="slider-container" aria-label="Curated bowls slider">
-        <button class="slider-btn prev" aria-label="Previous bowls" onclick="slidePrev('curated-slider-container')">&#10094;</button>
-        <div class="slider-track" role="list" tabindex="0">
-          <!-- Each slide = one curated bowl flip card -->
-          <article class="slide" role="listitem" tabindex="0" aria-labelledby="power-bowl-title">
-            <div class="flip-card" tabindex="-1">
-              <div class="flip-card-inner">
-                <div class="flip-card-front">
-                  <img class="flip-image" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Power Bowl dish" />
-                  <div class="card-front-content">
-                    <h3 id="power-bowl-title">Power Bowl</h3>
-                    <p>A protein-packed bowl built to fuel strength, energy, and peak performance</p>
-                    <small>Lean chicken, omega-rich fish, nutrient-dense quinoa</small>
-                  </div>
-                </div>
-                <div class="flip-card-back">
-                  <h3>Ingredients</h3>
-                  <div class="ingredients-list" aria-label="Power Bowl Ingredients">
-                    <b>Base:</b> Tri-Colour Quinoa<br/>
-                    <b>Proteins:</b> Herb-Grilled Chicken, Ajwain Fish Tikka<br/>
-                    <b>Sides:</b> Blanched Broccoli, Grilled Veggies, Roasted Beetroot, Avocado<br/>
-                    <b>Toppings:</b> Protein Seeds<br/>
-                    <b>Sauce:</b> Olive Oil Balsamic Dressing
-                  </div>
-                  <button class="order-button" type="button" aria-label="Order Power Bowl">Order Now</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="slide" role="listitem" tabindex="0" aria-labelledby="vitality-bowl-title">
-            <div class="flip-card" tabindex="-1">
-              <div class="flip-card-inner">
-                <div class="flip-card-front">
-                  <img class="flip-image" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Vitality Bowl dish" />
-                  <div class="card-front-content">
-                    <h3 id="vitality-bowl-title">Vitality Bowl</h3>
-                    <p>A wholesome, energizing bowl crafted to fuel your body and keep you thriving all day</p>
-                    <small>Balanced carbs and protein for long-lasting energy</small>
-                  </div>
-                </div>
-                <div class="flip-card-back">
-                  <h3>Ingredients</h3>
-                  <div class="ingredients-list" aria-label="Vitality Bowl Ingredients">
-                    <b>Base:</b> Brown Rice<br/>
-                    <b>Protein:</b> Herb-Grilled Chicken<br/>
-                    <b>Sides:</b> Blanched Beans, Masala Corn, Edamame, Roasted Cauliflower<br/>
-                    <b>Toppings:</b> Pickled Onion<br/>
-                    <b>Sauce:</b> Tikka Masala
-                  </div>
-                  <button class="order-button" type="button" aria-label="Order Vitality Bowl">Order Now</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="slide" role="listitem" tabindex="0" aria-labelledby="harmony-bowl-title">
-            <div class="flip-card" tabindex="-1">
-              <div class="flip-card-inner">
-                <div class="flip-card-front">
-                  <img class="flip-image" src="https://images.unsplash.com/photo-1464306076886-d5bbc8bdae36?auto=format&fit=crop&w=600&q=80" alt="Harmony Bowl dish" />
-                  <div class="card-front-content">
-                    <h3 id="harmony-bowl-title">Harmony Bowl</h3>
-                    <p>A nourishing blend of gut-friendly superfoods designed to restore balance and support inner wellness</p>
-                    <small>Fiber-rich greens and plant proteins for a happy gut</small>
-                  </div>
-                </div>
-                <div class="flip-card-back">
-                  <h3>Ingredients</h3>
-                  <div class="ingredients-list" aria-label="Harmony Bowl Ingredients">
-                    <b>Base:</b> Mixed Greens<br/>
-                    <b>Protein:</b> Grilled Tofu<br/>
-                    <b>Sides:</b> Sprout Chaat, Roasted Beetroot, Blanched Beans, Mango & Arugula<br/>
-                    <b>Toppings:</b> Roasted Nuts<br/>
-                    <b>Sauce:</b> Olive Oil Balsamic Dressing
-                  </div>
-                  <button class="order-button" type="button" aria-label="Order Harmony Bowl">Order Now</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="slide" role="listitem" tabindex="0" aria-labelledby="lean-bowl-title">
-            <div class="flip-card" tabindex="-1">
-              <div class="flip-card-inner">
-                <div class="flip-card-front">
-                  <img class="flip-image" src="https://images.unsplash.com/photo-1519864631748-f4091109ee47?auto=format&fit=crop&w=600&q=80" alt="Lean Bowl dish" />
-                  <div class="card-front-content">
-                    <h3 id="lean-bowl-title">Lean Bowl</h3>
-                    <p>A light, nutrient-dense bowl designed to satisfy and support your wellness goals</p>
-                    <small>High protein, low refined carbs, healthy fats</small>
-                  </div>
-                </div>
-                <div class="flip-card-back">
-                  <h3>Ingredients</h3>
-                  <div class="ingredients-list" aria-label="Lean Bowl Ingredients">
-                    <b>Base:</b> Whole Wheat Noodles<br/>
-                    <b>Protein:</b> Tandoori Chicken Tikka<br/>
-                    <b>Sides:</b> Grilled Veggies, Blanched Broccoli, Avocado, Masala Green Peas<br/>
-                    <b>Toppings:</b> Black Olives<br/>
-                    <b>Sauce:</b> Chilli Garlic Sauce
-                  </div>
-                  <button class="order-button" type="button" aria-label="Order Lean Bowl">Order Now</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="slide" role="listitem" tabindex="0" aria-labelledby="sukoon-bowl-title">
-            <div class="flip-card" tabindex="-1">
-              <div class="flip-card-inner">
-                <div class="flip-card-front">
-                  <img class="flip-image" src="https://images.unsplash.com/photo-1502741126161-b048400d3436?auto=format&fit=crop&w=600&q=80" alt="Sukoon Bowl dish" />
-                  <div class="card-front-content">
-                    <h3 id="sukoon-bowl-title">Sukoon Bowl</h3>
-                    <p>A soulful, homestyle bowl crafted to bring warmth, comfort, and peace with every bite</p>
-                    <small>Fragrant rice, smoky chicken, and biryani-style curry with a healthy twist</small>
-                  </div>
-                </div>
-                <div class="flip-card-back">
-                  <h3>Ingredients</h3>
-                  <div class="ingredients-list" aria-label="Sukoon Bowl Ingredients">
-                    <b>Base:</b> White Basmati Rice<br/>
-                    <b>Protein:</b> Tandoori Chicken Tikka<br/>
-                    <b>Sides:</b> Grilled Veggies, Roasted Cauliflower, Masala Corn<br/>
-                    <b>Toppings:</b> Pickled Onion<br/>
-                    <b>Sauce:</b> Biryani-Style Gravy
-                  </div>
-                  <button class="order-button" type="button" aria-label="Order Sukoon Bowl">Order Now</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="slide" role="listitem" tabindex="0" aria-labelledby="sabzi-bowl-title">
-            <div class="flip-card" tabindex="-1">
-              <div class="flip-card-inner">
-                <div class="flip-card-front">
-                  <img class="flip-image" src="https://images.unsplash.com/photo-1465101162946-4377e57745c3?auto=format&fit=crop&w=600&q=80" alt="Sabzi Bowl dish" />
-                  <div class="card-front-content">
-                    <h3 id="sabzi-bowl-title">Sabzi Bowl</h3>
-                    <p>A colorful medley of fresh, seasonal vegetables crafted into a wholesome, satisfying bowl</p>
-                    <small>All-veg, high fiber, spicy-sweet flavors</small>
-                  </div>
-                </div>
-                <div class="flip-card-back">
-                  <h3>Ingredients</h3>
-                  <div class="ingredients-list" aria-label="Sabzi Bowl Ingredients">
-                    <b>Base:</b> Tri-Colour Quinoa<br/>
-                    <b>Proteins:</b> Paneer Tikka, Grilled Tofu<br/>
-                    <b>Sides:</b> Blanched Broccoli, Roasted Beetroot, Masala Green Peas, Mango & Arugula<br/>
-                    <b>Toppings:</b> Protein Seeds<br/>
-                    <b>Sauce:</b> Thai Green Curry
-                  </div>
-                  <button class="order-button" type="button" aria-label="Order Sabzi Bowl">Order Now</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="slide" role="listitem" tabindex="0" aria-labelledby="utsav-bowl-title">
-            <div class="flip-card" tabindex="-1">
-              <div class="flip-card-inner">
-                <div class="flip-card-front">
-                  <img class="flip-image" src="https://images.unsplash.com/photo-1481931715705-36f8c8b2368b?auto=format&fit=crop&w=600&q=80" alt="Utsav Bowl dish" />
-                  <div class="card-front-content">
-                    <h3 id="utsav-bowl-title">Utsav Bowl</h3>
-                    <p>A vibrant, energy-boosting bowl celebrating flavor, nourishment, and festivity</p>
-                    <small>Wholesome rice, zesty mustard, grilled chicken</small>
-                  </div>
-                </div>
-                <div class="flip-card-back">
-                  <h3>Ingredients</h3>
-                  <div class="ingredients-list" aria-label="Utsav Bowl Ingredients">
-                    <b>Base:</b> Brown Rice<br/>
-                    <b>Protein:</b> Herb-Grilled Chicken<br/>
-                    <b>Sides:</b> Saute Beans, Roasted Cauliflower, Sprout Chaat<br/>
-                    <b>Toppings:</b> Roasted Garlic Flakes<br/>
-                    <b>Sauce:</b> Bengali Mustard Sauce
-                  </div>
-                  <button class="order-button" type="button" aria-label="Order Utsav Bowl">Order Now</button>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-        <button class="slider-btn next" aria-label="Next bowls" onclick="slideNext('curated-slider-container')">&#10095;</button>
-      </div>
-    </section>
-
-    <!-- Custom Tab with ingredient sub-tabs -->
-    <section id="custom-tab" role="tabpanel" tabindex="0" aria-labelledby="custom-tab-btn" class="tab-content" aria-hidden="true">
-
-      <nav class="ingredient-tabs" role="tablist" aria-label="Ingredient sub-tabs">
-        <button role="tab" aria-selected="true" aria-controls="bases" id="btn-bases" tabindex="0" class="ingredient-btn active" onclick="switchIngredientTab(event, 'bases')">Bases</button>
-        <button role="tab" aria-selected="false" aria-controls="proteins" id="btn-proteins" tabindex="-1" class="ingredient-btn" onclick="switchIngredientTab(event, 'proteins')">Proteins</button>
-        <button role="tab" aria-selected="false" aria-controls="sides" id="btn-sides" tabindex="-1" class="ingredient-btn" onclick="switchIngredientTab(event, 'sides')">Sides</button>
-        <button role="tab" aria-selected="false" aria-controls="toppings" id="btn-toppings" tabindex="-1" class="ingredient-btn" onclick="switchIngredientTab(event, 'toppings')">Toppings</button>
-        <button role="tab" aria-selected="false" aria-controls="sauces" id="btn-sauces" tabindex="-1" class="ingredient-btn" onclick="switchIngredientTab(event, 'sauces')">Sauces & Dressings</button>
-      </nav>
-
-      <!-- Each ingredient group slider -->
-      <div id="bases" role="tabpanel" tabindex="0" aria-labelledby="btn-bases" class="ingredient-tab-content active">
-        <div id="bases-slider-container" class="slider-container" aria-label="Bases slider">
-          <button class="slider-btn prev" aria-label="Previous base ingredient" onclick="slidePrev('bases-slider-container')">&#10094;</button>
-          <div id="bases-slider" class="slider-track" role="list" tabindex="0">
-            <article class="slide" role="listitem" tabindex="0" aria-label="Tri-Colour Quinoa">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=600&q=80" alt="Tri-Colour Quinoa" />
-                    <div class="card-front-content"><h3>Tri-Colour Quinoa</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Tri-Colour Quinoa</h3>
-                    <p>Healthy protein-rich grain base.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Brown Rice">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1514513873416-3949eae1b9ee?auto=format&fit=crop&w=600&q=80" alt="Brown Rice" />
-                    <div class="card-front-content"><h3>Brown Rice</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Brown Rice</h3>
-                    <p>Rich in fiber and nutrients for long-lasting energy.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="White Basmati Rice">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1506399092596-2b08d1fc9985?auto=format&fit=crop&w=600&q=80" alt="White Basmati Rice" />
-                    <div class="card-front-content"><h3>White Basmati Rice</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>White Basmati Rice</h3>
-                    <p>Fragrant rice, perfect for comfort bowls.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Whole Wheat Noodles">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80" alt="Whole Wheat Noodles" />
-                    <div class="card-front-content"><h3>Whole Wheat Noodles</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Whole Wheat Noodles</h3>
-                    <p>Light and nutritious noodle base.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Mixed Greens">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=600&q=80" alt="Mixed Greens" />
-                    <div class="card-front-content"><h3>Mixed Greens</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Mixed Greens</h3>
-                    <p>Fresh leafy greens for a healthy meal.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
+      <!-- Slide 1 -->
+      <section class="cmp-slide">
+        <div class="cmp-wrapper">
+          <div class="cmp-before">
+            <img src="https://picsum.photos/id/1015/800/600" alt="Before 1">
           </div>
-          <button class="slider-btn next" aria-label="Next base ingredient" onclick="slideNext('bases-slider-container')">&#10095;</button>
-        </div>
-      </div>
-
-      <div id="proteins" role="tabpanel" tabindex="0" aria-labelledby="btn-proteins" class="ingredient-tab-content">
-        <div id="proteins-slider-container" class="slider-container" aria-label="Proteins slider">
-          <button class="slider-btn prev" aria-label="Previous protein ingredient" onclick="slidePrev('proteins-slider-container')">&#10094;</button>
-          <div id="proteins-slider" class="slider-track" role="list" tabindex="0">
-            <article class="slide" role="listitem" tabindex="0" aria-label="Herb-Grilled Chicken">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1562967916-eb82221dfb23?auto=format&fit=crop&w=600&q=80" alt="Herb-Grilled Chicken" />
-                    <div class="card-front-content"><h3>Herb-Grilled Chicken</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Herb-Grilled Chicken</h3>
-                    <p>Tender and flavorful grilled chicken breast.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Ajwain Fish Tikka">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=600&q=80" alt="Ajwain Fish Tikka" />
-                    <div class="card-front-content"><h3>Ajwain Fish Tikka</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Ajwain Fish Tikka</h3>
-                    <p>Spiced fish pieces cooked to perfection.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Paneer Tikka">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1601924928100-5a5bcf45ee8d?auto=format&fit=crop&w=600&q=80" alt="Paneer Tikka" />
-                    <div class="card-front-content"><h3>Paneer Tikka</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Paneer Tikka</h3>
-                    <p>Marinated grilled cottage cheese cubes.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Grilled Tofu">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1590080877777-0f48c54426cb?auto=format&fit=crop&w=600&q=80" alt="Grilled Tofu" />
-                    <div class="card-front-content"><h3>Grilled Tofu</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Grilled Tofu</h3>
-                    <p>Soft tofu grilled with spices.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Tandoori Chicken Tikka">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1562967916-eb82221dfb23?auto=format&fit=crop&w=600&q=80" alt="Tandoori Chicken Tikka" />
-                    <div class="card-front-content"><h3>Tandoori Chicken Tikka</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Tandoori Chicken Tikka</h3>
-                    <p>Spicy chicken chunks cooked with tandoori masala.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
+          <div class="cmp-after">
+            <img src="https://picsum.photos/id/1016/800/600" alt="After 1">
           </div>
-          <button class="slider-btn next" aria-label="Next protein ingredient" onclick="slideNext('proteins-slider-container')">&#10095;</button>
-        </div>
-      </div>
-
-      <div id="sides" role="tabpanel" tabindex="0" aria-labelledby="btn-sides" class="ingredient-tab-content">
-        <div id="sides-slider-container" class="slider-container" aria-label="Sides slider">
-          <button class="slider-btn prev" aria-label="Previous side ingredient" onclick="slidePrev('sides-slider-container')">&#10094;</button>
-          <div id="sides-slider" class="slider-track" role="list" tabindex="0">
-            <article class="slide" role="listitem" tabindex="0" aria-label="Blanched Broccoli">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1510626176961-4b30ae821a92?auto=format&fit=crop&w=600&q=80" alt="Blanched Broccoli" />
-                    <div class="card-front-content"><h3>Blanched Broccoli</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Blanched Broccoli</h3>
-                    <p>Freshly blanched broccoli for vitamins and fiber.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Grilled Veggies">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=600&q=80" alt="Grilled Veggies" />
-                    <div class="card-front-content"><h3>Grilled Veggies</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Grilled Veggies</h3>
-                    <p>Charred and delicious grilled vegetables.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Roasted Beetroot">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?auto=format&fit=crop&w=600&q=80" alt="Roasted Beetroot" />
-                    <div class="card-front-content"><h3>Roasted Beetroot</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Roasted Beetroot</h3>
-                    <p>Sweet and earthy roasted beetroot slices.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Avocado">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Avocado" />
-                    <div class="card-front-content"><h3>Avocado</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Avocado</h3>
-                    <p>Creamy avocado for healthy fats and flavor.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Blanched Beans">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=600&q=80" alt="Blanched Beans" />
-                    <div class="card-front-content"><h3>Blanched Beans</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Blanched Beans</h3>
-                    <p>Fresh green beans blanched for texture and flavor.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
+          <div class="cmp-scroller" aria-label="Drag to compare" role="slider" tabindex="0">
+            <svg class="cmp-scroller__thumb" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true">
+              <polygon points="0,50 37,68 37,32" style="fill:#fff"/>
+              <polygon points="100,50 64,32 64,68" style="fill:#fff"/>
+            </svg>
           </div>
-          <button class="slider-btn next" aria-label="Next side ingredient" onclick="slideNext('sides-slider-container')">&#10095;</button>
         </div>
-      </div>
+      </section>
 
-      <div id="toppings" role="tabpanel" tabindex="0" aria-labelledby="btn-toppings" class="ingredient-tab-content">
-        <div id="toppings-slider-container" class="slider-container" aria-label="Toppings slider">
-          <button class="slider-btn prev" aria-label="Previous topping ingredient" onclick="slidePrev('toppings-slider-container')">&#10094;</button>
-          <div id="toppings-slider" class="slider-track" role="list" tabindex="0">
-            <article class="slide" role="listitem" tabindex="0" aria-label="Protein Seeds">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?auto=format&fit=crop&w=600&q=80" alt="Protein Seeds" />
-                    <div class="card-front-content"><h3>Protein Seeds</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Protein Seeds</h3>
-                    <p>Nutrient dense seed mix for topping.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Pickled Onion">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=600&q=80" alt="Pickled Onion" />
-                    <div class="card-front-content"><h3>Pickled Onion</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Pickled Onion</h3>
-                    <p>A tangy and flavorful topping.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Roasted Nuts">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=600&q=80" alt="Roasted Nuts" />
-                    <div class="card-front-content"><h3>Roasted Nuts</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Roasted Nuts</h3>
-                    <p>Crispy and savory nut mix topping.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Black Olives">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1572441710203-47d4a1a78997?auto=format&fit=crop&w=600&q=80" alt="Black Olives" />
-                    <div class="card-front-content"><h3>Black Olives</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Black Olives</h3>
-                    <p>Rich and tangy olive topping.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Roasted Garlic Flakes">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1607647881066-8086db1c4690?auto=format&fit=crop&w=600&q=80" alt="Roasted Garlic Flakes" />
-                    <div class="card-front-content"><h3>Roasted Garlic Flakes</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Roasted Garlic Flakes</h3>
-                    <p>Aromatic topping for rich flavor.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
+      <!-- Slide 2 -->
+      <section class="cmp-slide">
+        <div class="cmp-wrapper">
+          <div class="cmp-before">
+            <img src="https://picsum.photos/id/1025/800/600" alt="Before 2">
           </div>
-          <button class="slider-btn next" aria-label="Next topping ingredient" onclick="slideNext('toppings-slider-container')">&#10095;</button>
-        </div>
-      </div>
-
-      <div id="sauces" role="tabpanel" tabindex="0" aria-labelledby="btn-sauces" class="ingredient-tab-content">
-        <div id="sauces-slider-container" class="slider-container" aria-label="Sauces and dressings slider">
-          <button class="slider-btn prev" aria-label="Previous sauce ingredient" onclick="slidePrev('sauces-slider-container')">&#10094;</button>
-          <div id="sauces-slider" class="slider-track" role="list" tabindex="0">
-            <article class="slide" role="listitem" tabindex="0" aria-label="Olive Oil Balsamic Dressing">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1506354666786-959d6d497f1a?auto=format&fit=crop&w=600&q=80" alt="Olive Oil Balsamic Dressing" />
-                    <div class="card-front-content"><h3>Olive Oil Balsamic Dressing</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Olive Oil Balsamic Dressing</h3>
-                    <p>Classic dressing with olive oil and balsamic.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Tikka Masala">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1587386916493-156937f3d34d?auto=format&fit=crop&w=600&q=80" alt="Tikka Masala" />
-                    <div class="card-front-content"><h3>Tikka Masala</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Tikka Masala</h3>
-                    <p>Rich and spicy Indian sauce.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Chilli Garlic Sauce">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1565895405227-76345a53d5c3?auto=format&fit=crop&w=600&q=80" alt="Chilli Garlic Sauce" />
-                    <div class="card-front-content"><h3>Chilli Garlic Sauce</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Chilli Garlic Sauce</h3>
-                    <p>Spicy and flavorful garlic sauce.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Biryani-Style Gravy">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1600891964607-9d4a7e9e251e?auto=format&fit=crop&w=600&q=80" alt="Biryani-Style Gravy" />
-                    <div class="card-front-content"><h3>Biryani-Style Gravy</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Biryani-Style Gravy</h3>
-                    <p>Flavorful gravy for classic biryani taste.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Thai Green Curry">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1564694202779-bc908c327862?auto=format&fit=crop&w=600&q=80" alt="Thai Green Curry" />
-                    <div class="card-front-content"><h3>Thai Green Curry</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Thai Green Curry</h3>
-                    <p>Spicy and creamy Thai curry sauce.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article class="slide" role="listitem" tabindex="0" aria-label="Bengali Mustard Sauce">
-              <div class="flip-card" tabindex="-1">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <img class="flip-image" src="https://images.unsplash.com/photo-1571501679680-de32f1e7aad4?auto=format&fit=crop&w=600&q=80" alt="Bengali Mustard Sauce" />
-                    <div class="card-front-content"><h3>Bengali Mustard Sauce</h3></div>
-                  </div>
-                  <div class="flip-card-back">
-                    <h3>Bengali Mustard Sauce</h3>
-                    <p>Zesty and sharp mustard-based sauce from Bengal.</p>
-                  </div>
-                </div>
-              </div>
-            </article>
+          <div class="cmp-after">
+            <img src="https://picsum.photos/id/1024/800/600" alt="After 2">
           </div>
-          <button class="slider-btn next" aria-label="Next sauce ingredient" onclick="slideNext('sauces-slider-container')">&#10095;</button>
+          <div class="cmp-scroller" aria-label="Drag to compare" role="slider" tabindex="0">
+            <svg class="cmp-scroller__thumb" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true">
+              <polygon points="0,50 37,68 37,32" style="fill:#fff"/>
+              <polygon points="100,50 64,32 64,68" style="fill:#fff"/>
+            </svg>
+          </div>
         </div>
-      </div>
+      </section>
 
-    </section>
-  </main>
-</section>
+      <!-- Slide 3 -->
+      <section class="cmp-slide">
+        <div class="cmp-wrapper">
+          <div class="cmp-before">
+            <img src="https://picsum.photos/id/1069/800/600" alt="Before 3">
+          </div>
+          <div class="cmp-after">
+            <img src="https://picsum.photos/id/1074/800/600" alt="After 3">
+          </div>
+          <div class="cmp-scroller" aria-label="Drag to compare" role="slider" tabindex="0">
+            <svg class="cmp-scroller__thumb" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true">
+              <polygon points="0,50 37,68 37,32" style="fill:#fff"/>
+              <polygon points="100,50 64,32 64,68" style="fill:#fff"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+    </div>
+    <button class="nav prev">‹</button>
+    <button class="nav next">›</button>
+  </div>
 
 <script>
-  // Main tab switcher
-  function eliteSwitchTab(evt, tabId) {
-    const section = evt.currentTarget.closest('.elite-bowls-section');
-    // handle tab buttons
-    const buttons = section.querySelectorAll('.tab-button');
-    buttons.forEach(btn => {
-      btn.classList.remove('active');
-      btn.setAttribute('aria-selected', 'false');
-      btn.setAttribute('tabindex', '-1');
-    });
-    evt.currentTarget.classList.add('active');
-    evt.currentTarget.setAttribute('aria-selected', 'true');
-    evt.currentTarget.setAttribute('tabindex', '0');
-    evt.currentTarget.focus();
-    // handle tab content
-    const contents = section.querySelectorAll('.tab-content');
-    contents.forEach(c => {
-      c.classList.remove('active');
-      c.setAttribute('aria-hidden', 'true');
-    });
-    const activeContent = section.querySelector(`#${tabId}`);
-    activeContent.classList.add('active');
-    activeContent.setAttribute('aria-hidden', 'false');
-  }
+/* ========= Before/After Slider ========= */
+(function(){
+  document.querySelectorAll('.cmp-wrapper').forEach(function(wrapper){
+    const after = wrapper.querySelector('.cmp-after');
+    const scroller = wrapper.querySelector('.cmp-scroller');
+    let active = false;
 
-  // Ingredient sub-tabs switcher
-  function switchIngredientTab(evt, tabId) {
-    const container = evt.currentTarget.closest('#custom-tab');
-    // buttons
-    const buttons = container.querySelectorAll('.ingredient-btn');
-    buttons.forEach(btn => {
-      btn.classList.remove('active');
-      btn.setAttribute('aria-selected', 'false');
-      btn.setAttribute('tabindex', '-1');
-    });
-    evt.currentTarget.classList.add('active');
-    evt.currentTarget.setAttribute('aria-selected', 'true');
-    evt.currentTarget.setAttribute('tabindex', '0');
-    evt.currentTarget.focus();
-    // content panels
-    const panels = container.querySelectorAll('.ingredient-tab-content');
-    panels.forEach(panel => {
-      panel.classList.remove('active');
-      panel.setAttribute('aria-hidden', 'true');
-    });
-    const activePanel = container.querySelector(`#${tabId}`);
-    activePanel.classList.add('active');
-    activePanel.setAttribute('aria-hidden', 'false');
-  }
+    function scrollIt(xPage){
+      const rect = wrapper.getBoundingClientRect();
+      const leftInPage = rect.left + window.pageXOffset;
+      const x = xPage - leftInPage;
+      const max = wrapper.offsetWidth;
+      const pos = Math.max(0, Math.min(x, max));
+      // Clip the after image
+      after.style.clipPath = `inset(0 calc(100% - ${pos}px) 0 0)`;
+      scroller.style.left = (pos - 25) + 'px';
+    }
 
-  // Slider functionality: scroll by card width on button click
-  function slideNext(containerId) {
-    const container = document.getElementById(containerId);
-    const slide = container.querySelector('.slide');
-    if (!slide) return;
-    const gap = 20;
-    const slideWidth = slide.offsetWidth + gap;
-    container.scrollBy({left: slideWidth, behavior: 'smooth'});
+    // Mouse Events
+    scroller.addEventListener('mousedown', function(e){
+      active = true;
+      scroller.classList.add('cmp-scrolling');
+      e.preventDefault();
+    });
+    document.addEventListener('mouseup', function(){
+      active = false;
+      scroller.classList.remove('cmp-scrolling');
+    });
+    document.addEventListener('mousemove', function(e){
+      if(!active) return;
+      scrollIt(e.pageX);
+    });
+
+    // Touch Events
+    scroller.addEventListener('touchstart', function(e){
+      active = true;
+      scroller.classList.add('cmp-scrolling');
+      e.preventDefault();
+    }, {passive:false});
+    document.addEventListener('touchend', function(){
+      active = false;
+      scroller.classList.remove('cmp-scrolling');
+    });
+    document.addEventListener('touchmove', function(e){
+      if(!active) return;
+      if(e.touches && e.touches.length){
+        scrollIt(e.touches[0].pageX);
+      }
+    }, {passive:false});
+
+    // Initialize position
+    (function init(){
+      const start = Math.min(150, wrapper.offsetWidth);
+      after.style.clipPath = `inset(0 calc(100% - ${start}px) 0 0)`;
+      scroller.style.left = (start - 25) + 'px';
+    })();
+  });
+})();
+
+/* ========= Carousel ========= */
+(function(){
+  const track = document.querySelector('.cmp-track');
+  const slides = document.querySelectorAll('.cmp-slide');
+  let current = 0;
+
+  function updateSlide(){
+    track.style.transform = `translateX(-${current * 100}%)`;
   }
-  function slidePrev(containerId) {
-    const container = document.getElementById(containerId);
-    const slide = container.querySelector('.slide');
-    if (!slide) return;
-    const gap = 20;
-    const slideWidth = slide.offsetWidth + gap;
-    container.scrollBy({left: -slideWidth, behavior: 'smooth'});
-  }
+  document.querySelector('.next').addEventListener('click', () => {
+    current = (current + 1) % slides.length;
+    updateSlide();
+  });
+  document.querySelector('.prev').addEventListener('click', () => {
+    current = (current - 1 + slides.length) % slides.length;
+    updateSlide();
+  });
+
+  updateSlide();
+})();
 </script>
 </body>
 </html>

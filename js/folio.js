@@ -1,66 +1,45 @@
 (function(){
-  // Support multiple instances if you duplicate the section
   document.querySelectorAll('.cmp-wrapper').forEach(function(wrapper){
-    const after    = wrapper.querySelector('.cmp-after');
+    const after = wrapper.querySelector('.cmp-after');
     const scroller = wrapper.querySelector('.cmp-scroller');
-
     let active = false;
 
     function scrollIt(xPage){
-      // Use pageX like your original, but normalize against viewport offset + scroll
       const rect = wrapper.getBoundingClientRect();
       const leftInPage = rect.left + window.pageXOffset;
       const x = xPage - leftInPage;
-
-      // Clamp
       const max = wrapper.offsetWidth;
       const pos = Math.max(0, Math.min(x, max));
-
-      // Set widths/positions (mirror your original math: 50px knob -> half = 25)
-      after.style.width = pos + 'px';
+      // Clip the after image
+      after.style.clipPath = `inset(0 calc(100% - ${pos}px) 0 0)`;
       scroller.style.left = (pos - 25) + 'px';
     }
 
-    // Mouse
+    // Mouse Events
     scroller.addEventListener('mousedown', function(e){
       active = true;
       scroller.classList.add('cmp-scrolling');
       e.preventDefault();
     });
-
     document.addEventListener('mouseup', function(){
       active = false;
       scroller.classList.remove('cmp-scrolling');
     });
-
-    document.addEventListener('mouseleave', function(){
-      active = false;
-      scroller.classList.remove('cmp-scrolling');
-    });
-
     document.addEventListener('mousemove', function(e){
       if(!active) return;
       scrollIt(e.pageX);
     });
 
-    // Touch
+    // Touch Events
     scroller.addEventListener('touchstart', function(e){
       active = true;
       scroller.classList.add('cmp-scrolling');
-      // prevent scroll while dragging
       e.preventDefault();
     }, {passive:false});
-
     document.addEventListener('touchend', function(){
       active = false;
       scroller.classList.remove('cmp-scrolling');
     });
-
-    document.addEventListener('touchcancel', function(){
-      active = false;
-      scroller.classList.remove('cmp-scrolling');
-    });
-
     document.addEventListener('touchmove', function(e){
       if(!active) return;
       if(e.touches && e.touches.length){
@@ -68,12 +47,32 @@
       }
     }, {passive:false});
 
-    // Init (exactly like your original intent)
-    // Set to 150px so both images are visible at start
+    // Initialize position
     (function init(){
       const start = Math.min(150, wrapper.offsetWidth);
-      after.style.width = start + 'px';
+      after.style.clipPath = `inset(0 calc(100% - ${start}px) 0 0)`;
       scroller.style.left = (start - 25) + 'px';
     })();
   });
+})();
+
+/* ========= Carousel ========= */
+(function(){
+  const track = document.querySelector('.cmp-track');
+  const slides = document.querySelectorAll('.cmp-slide');
+  let current = 0;
+
+  function updateSlide(){
+    track.style.transform = `translateX(-${current * 100}%)`;
+  }
+  document.querySelector('.next').addEventListener('click', () => {
+    current = (current + 1) % slides.length;
+    updateSlide();
+  });
+  document.querySelector('.prev').addEventListener('click', () => {
+    current = (current - 1 + slides.length) % slides.length;
+    updateSlide();
+  });
+
+  updateSlide();
 })();
