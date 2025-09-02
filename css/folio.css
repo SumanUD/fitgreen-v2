@@ -1,0 +1,95 @@
+.cmp-section{
+  width:100%;
+  padding: 2rem 1rem;
+  display:flex;
+  justify-content:center;
+  background: transparent; /* keep page bg */
+}
+
+.cmp-wrapper{
+  width:100%;
+  max-width:900px;
+  height:600px;               /* fixed like original for reliability */
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;          /* subtle polish */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.18), 0 6px 6px rgba(0,0,0,0.12);
+  background:#000;
+}
+
+/* Responsive height fallback (keeps aspect-ish on small screens) */
+@media (max-width: 768px){
+  .cmp-wrapper{ height: 60vw; } /* ~3:2 ratio */
+}
+
+/* Image panes (same layering behavior as original) */
+.cmp-before,
+.cmp-after{
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0; left:0;
+  overflow:hidden;
+  pointer-events:none;         /* passthrough like original */
+  background:#fff;
+}
+
+.cmp-image{
+  height:100%;
+  width:100%;
+  object-fit:cover;
+  user-select:none;
+  -webkit-user-drag: none;
+}
+
+/* Initial reveal width exactly like original (125px -> a bit more obvious: 150) */
+.cmp-after{ width:150px; }
+
+/* Dragger */
+.cmp-scroller{
+  width:50px;
+  height:50px;
+  position:absolute;
+  left:150px;                  /* aligned with .cmp-after initial width */
+  top:50%;
+  transform:translateY(-50%);
+  border-radius:50%;
+  background-color: rgba(0,0,0,0.45);
+  border:5px solid #fff;       /* matches line color */
+  opacity:0.95;
+  cursor: ew-resize;
+  pointer-events:auto;
+  z-index:3;
+  transition: background-color .15s ease, opacity .15s ease, box-shadow .15s ease;
+  outline: none;
+}
+
+.cmp-scroller:hover,
+.cmp-scroller.cmp-scrolling,
+.cmp-scroller:focus{
+  background-color: rgba(0,0,0,0.65);
+  opacity:1;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+.cmp-scroller__thumb{
+  width:100%;
+  height:100%;
+  padding:6px;
+}
+
+/* Vertical guideline lines (top & bottom) */
+.cmp-scroller:before,
+.cmp-scroller:after{
+  content:"";
+  display:block;
+  width:7px;
+  height:9999px;
+  position:absolute;
+  left:50%;
+  margin-left:-3.5px;
+  z-index:2;
+  background:#fff;
+}
+.cmp-scroller:before{ top:100%; }
+.cmp-scroller:after{ bottom:100%; }

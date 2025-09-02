@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Healthy Bowl Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+  /* === Reset & base === */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    background: linear-gradient(135deg, #f7fafc 0%, #e4f2ed 100%);
+    color: #202833;
+  }
+  button {
+    font-family: inherit;
+  }
+
+  /* === Header === */
+  header.main-header {
+    background: #24b47e;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 2rem;
+    padding: 2rem 1rem 1rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(35,75,126,0.07);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+  }
+
+  /* === Tabs for Curated / Build === */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin: 1.8rem auto 2rem auto;
+    gap: 2rem;
+    max-width: 600px;
+  }
+  .tab {
+    background: #f1f9f7;
+    border-radius: 50px;
+    padding: 0.8rem 2.5rem;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #24b47e;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    box-shadow: inset 0 0 0 0 #24b47e;
+  }
+  .tab:hover {
+    background: #d4eee4;
+  }
+  .tab.active {
+    background: #24b47e;
+    color: white;
+    box-shadow: inset 0 -4px 0 0 #187647;
+  }
+
+  /* === Main layout container === */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+    padding: 0 1rem 4rem;
+  }
+
+  /* === Curated Bowls List === */
+  .curated-list {
+    flex: 2.8;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(36,180,126,0.07);
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  .curated-bowl {
+    border: 2px solid transparent;
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.8rem;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+  }
+  .curated-bowl:hover {
+    border-color: #24b47e;
+  }
+  .curated-title {
+    font-weight: 800;
+    font-size: 1.45rem;
+    color: #1e6e50;
+    margin-bottom: 0.3rem;
+  }
+  .curated-desc {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: #415a5a;
+    line-height: 1.3;
+  }
+  .curated-details {
+    font-weight: 600;
+    color: #34504c;
+    margin-bottom: 0.8rem;
+  }
+  .curated-details span {
+    font-weight: 700;
+  }
+  .curated-order-btn {
+    background: #24b47e;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .curated-order-btn:hover {
+    background: #187647;
+  }
+
+  /* === Build Bowl Section === */
+  .build-section {
+    flex: 3;
+    display: none;
+    flex-direction: column;
+  }
+  .build-section.active {
+    display: flex;
+  }
+
+  /* === Stepper Navigation === */
+  nav.stepper {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .step {
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.5rem 1.3rem;
+    font-size: 1rem;
+    color: #24b47e;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    opacity: 0.7;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+  }
+  .step.active {
+    background: #24b47e;
+    color: white;
+    opacity: 1;
+    box-shadow: 0 6px 22px rgba(36,180,126,0.15);
+    transform: scale(1.07);
+  }
+
+  /* === Menu Sections === */
+  section.menu-section {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(36,180,126,0.07);
+    padding: 1.6rem 2rem;
+    margin-bottom: 2.8rem;
+  }
+  .menu-header {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #183543;
+    margin-bottom: 1.4rem;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #24b47e22;
+    padding-bottom: 0.7rem;
+  }
+  .options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(135px,1fr));
+    gap: 1.2rem;
+  }
+  .option-card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding-bottom: 0.9rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    text-align: center;
+    transition: all 0.3s ease;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .option-card:hover {
+    border-color: #24b47e;
+    box-shadow: 0 6px 26px rgba(36,180,126,0.15);
+    transform: scale(1.05);
+  }
+  .option-card.selected {
+    background: #e5f9ef;
+    border-color: #24b47e;
+    font-weight: 700;
+    box-shadow: 0 8px 32px rgba(36,180,126,0.2);
+  }
+  .option-card img {
+    width: 110px;
+    height: 90px;
+    object-fit: cover;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    transition: transform 0.2s;
+  }
+  .option-card:hover img {
+    transform: scale(1.1);
+  }
+  .option-info {
+    margin-top: 0.7rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #2a3a45;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+  }
+  .option-price {
+    color: #24b47e;
+    font-weight: 700;
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+  }
+
+  /* === Info Icon === */
+  .info-icon {
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid #24b47e;
+    width: 18px;
+    height: 18px;
+    color: #24b47e;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+    line-height: 18px;
+    font-size: 14px;
+    user-select: none;
+  }
+  .info-icon:hover {
+    background: #24b47e;
+    color: white;
+  }
+
+  /* === Modal for info === */
+  .modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    user-select: none;
+  }
+  .modal-bg.active {
+    display: flex;
+  }
+  .modal-box {
+    background: white;
+    border-radius: 18px;
+    width: 360px;
+    max-width: 95vw;
+    padding: 1.6rem 2rem;
+    box-shadow: 0 8px 33px rgba(36,180,126,0.25);
+    animation: modal-entry 0.3s ease forwards;
+    position: relative;
+  }
+  @keyframes modal-entry {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  .modal-close {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #666;
+  }
+  .modal-close:hover {
+    color: #24b47e;
+  }
+  .modal-title {
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    color: #1e6e50;
+  }
+  .modal-desc {
+    font-weight: 500;
+    line-height: 1.4;
+    color: #415a5a;
+  }
+
+  /* === Sidebar === */
+  .sidebar {
+    flex: 1.2;
+    background: rgba(255,255,255,0.92);
+    padding: 2rem 1.5rem;
+    border-radius: 22px;
+    min-width: 300px;
+    height: fit-content;
+    margin-top: 1.5rem;
+    position: sticky;
+    top: 50px;
+    opacity: 0;
+    transform: translateX(60px);
+    animation: sidebar-slide-in 0.8s cubic-bezier(0.36, -0.01, 0, 0.77) forwards;
+    box-shadow: 0 8px 38px rgba(36, 180, 126, 0.21);
+    border: 1px solid #e1f5ee;
+    backdrop-filter: blur(6px);
+    user-select: none;
+  }
+  .sidebar h3 {
+    font-size: 1.4rem;
+    color: #1e6e50;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+  .summary-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    color: #183543;
+  }
+  .summary-list li {
+    margin: 0.6rem 0;
+    padding: 0.5rem 0.7rem;
+    background: #f0f5f9;
+    border-radius: 7px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    animation: item-fade-in 0.28s cubic-bezier(0.32,0.47,0.48,1.13) forwards;
+  }
+
+  @keyframes item-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  .price-label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #24b47e;
+    text-align: center;
+    margin: 1.8rem 0 1rem 0;
+    transition: color 0.3s, font-size 0.24s;
+  }
+  .price-label.animated span {
+    color: #198d5b;
+    font-size: 1.4em;
+  }
+  .checkout-btn {
+    display: block;
+    width: 100%;
+    background: #24b47e;
+    color: white;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 10px;
+    border: none;
+    margin-top: 0.7rem;
+    cursor: pointer;
+    transition: background 0.28s;
+  }
+  .checkout-btn:hover, .checkout-btn:active {
+    background: #198d5b;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .sidebar {
+      margin-top: 1rem;
+      position: static;
+      min-width: unset;
+      height: auto;
+    }
+    .builder-area, .sidebar {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+<header class="main-header">🥗 Healthy Bowl Builder</header>
+
+<!-- Tabs for Curated vs Build -->
+<div class="tabs" role="tablist">
+  <button class="tab active" role="tab" aria-selected="true" aria-controls="curated-section" id="tab-curated">Curated Bowls</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="build-section" id="tab-build">Build Your Bowl</button>
+</div>
+
+<div class="container">
+  <!-- Curated Bowls Section -->
+  <section id="curated-section" class="curated-list" role="tabpanel" aria-labelledby="tab-curated">
+    <!-- Bowl 1 -->
+    <article class="curated-bowl" tabindex="0">
+      <div class="curated-title">Power Bowl</div>
+      <div class="curated-desc">A protein powerhouse designed for muscle recovery. Packed with lean chicken, omega-rich fish, and nutrient-dense quinoa.</div>
+      <div class="curated-details"><span>Base:</span> Tri-Colour Quinoa</div>
+      <div class="curated-details"><span>Proteins:</span> Herb-Grilled Chicken, Ajwain Fish Tikka</div>
+      <div class="curated-details"><span>Sides:</span> Blanched Broccoli, Grilled Veggies, Roasted Beetroot, Avocado</div>
+      <div class="curated-details"><span>Toppings:</span> Protein Seeds</div>
+      <div class="curated-details"><span>Sauce:</span> Olive Oil Balsamic Dressing</div>
+      <button class="curated-order-btn" data-bowl="Power Bowl">Order Power Bowl</button>
+    </article>
+    <!-- Bowl 2 -->
+    <article class="curated-bowl" tabindex="0">
+      <div class="curated-title">Vitality Bowl</div>
+      <div class="curated-desc">Balanced carbs and protein for long-lasting energy. Perfect for powering through your busiest days.</div>
+      <div class="curated-details"><span>Base:</span> Brown Rice</div>
+      <div class="curated-details"><span>Protein:</span> Herb-Grilled Chicken</div>
+      <div class="curated-details"><span>Sides:</span> Blanched Beans, Masala Corn, Edamame, Roasted Cauliflower</div>
+      <div class="curated-details"><span>Toppings:</span> Pickled Onion</div>
+      <div class="curated-details"><span>Sauce:</span> Tikka Masala</div>
+      <button class="curated-order-btn" data-bowl="Vitality Bowl">Order Vitality Bowl</button>
+    </article>
+    <!-- Bowl 3 -->
+    <article class="curated-bowl" tabindex="0">
+      <div class="curated-title">Harmony Bowl</div>
+      <div class="curated-desc">Fiber-rich greens, sprouts, and plant protein team up with probiotics for a happy, healthy gut.</div>
+      <div class="curated-details"><span>Base:</span> Mixed Greens</div>
+      <div class="curated-details"><span>Protein:</span> Grilled Tofu</div>
+      <div class="curated-details"><span>Sides:</span> Sprout Chaat, Roasted Beetroot, Blanched Beans, Mango & Arugula</div>
+      <div class="curated-details"><span>Toppings:</span> Roasted Nuts</div>
+      <div class="curated-details"><span>Sauce:</span> Olive Oil Balsamic Dressing</div>
+      <button class="curated-order-btn" data-bowl="Harmony Bowl">Order Harmony Bowl</button>
+    </article>
+    <!-- Bowl 4 -->
+    <article class="curated-bowl" tabindex="0">
+      <div class="curated-title">Lean Bowl</div>
+      <div class="curated-desc">Light yet filling — high in protein, low in refined carbs, with healthy fats to keep cravings away.</div>
+      <div class="curated-details"><span>Base:</span> Whole Wheat Noodles</div>
+      <div class="curated-details"><span>Protein:</span> Tandoori Chicken Tikka</div>
+      <div class="curated-details"><span>Sides:</span> Grilled Veggies, Blanched Broccoli, Avocado, Masala Green Peas</div>
+      <div class="curated-details"><span>Toppings:</span> Black Olives</div>
+      <div class="curated-details"><span>Sauce:</span> Chilli Garlic Sauce</div>
+      <button class="curated-order-btn" data-bowl="Lean Bowl">Order Lean Bowl</button>
+    </article>
+    <!-- Bowl 5 -->
+    <article class="curated-bowl" tabindex="0">
+      <div class="curated-title">Sukoon Bowl</div>
+      <div class="curated-desc">Your favorite comfort flavors, reinvented. Fragrant rice, smoky chicken, and biryani-style curry with a light, healthy twist.</div>
+      <div class="curated-details"><span>Base:</span> White Basmati Rice</div>
+      <div class="curated-details"><span>Protein:</span> Tandoori Chicken Tikka</div>
+      <div class="curated-details"><span>Sides:</span> Grilled Veggies, Roasted Cauliflower, Masala Corn</div>
+      <div class="curated-details"><span>Toppings:</span> Pickled Onion</div>
+      <div class="curated-details"><span>Sauce:</span> Biryani-Style Gravy</div>
+      <button class="curated-order-btn" data-bowl="Sukoon Bowl">Order Sukoon Bowl</button>
+    </article>
+    <!-- Bowl 6 -->
+    <article class="curated-bowl" tabindex="0">
+      <div class="curated-title">Sabzi Bowl</div>
+      <div class="curated-desc">All-veg, all strength. A hearty mix of plant-based proteins, high-fiber veggies, and spicy-sweet flavors.</div>
+      <div class="curated-details"><span>Base:</span> Tri-Colour Quinoa</div>
+      <div class="curated-details"><span>Proteins:</span> Paneer Tikka, Grilled Tofu</div>
+      <div class="curated-details"><span>Sides:</span> Blanched Broccoli, Roasted Beetroot, Masala Green Peas, Mango & Arugula</div>
+      <div class="curated-details"><span>Toppings:</span> Protein Seeds</div>
+      <div class="curated-details"><span>Sauce:</span> Thai Green Curry</div>
+      <button class="curated-order-btn" data-bowl="Sabzi Bowl">Order Sabzi Bowl</button>
+    </article>
+    <!-- Bowl 7 -->
+    <article class="curated-bowl" tabindex="0">
+      <div class="curated-title">Utsav Bowl</div>
+      <div class="curated-desc">Classic desi comfort with a healthier kick. Wholesome rice and rajma, paired with zesty mustard and grilled chicken.</div>
+      <div class="curated-details"><span>Base:</span> Brown Rice</div>
+      <div class="curated-details"><span>Protein:</span> Herb-Grilled Chicken</div>
+      <div class="curated-details"><span>Sides:</span> Sauté Beans, Roasted Cauliflower, Sprout Chaat</div>
+      <div class="curated-details"><span>Toppings:</span> Roasted Garlic Flakes</div>
+      <div class="curated-details"><span>Sauce:</span> Bengali Mustard Sauce</div>
+      <button class="curated-order-btn" data-bowl="Utsav Bowl">Order Utsav Bowl</button>
+    </article>
+  </section>
+
+  <!-- Build Bowl Section -->
+  <section id="build-section" class="build-section" role="tabpanel" aria-labelledby="tab-build">
+    <nav class="stepper" id="stepper">
+      <div class="step active" data-step="Bases" tabindex="0">Bases</div>
+      <div class="step" data-step="Proteins" tabindex="0">Proteins</div>
+      <div class="step" data-step="Sides" tabindex="0">Sides</div>
+      <div class="step" data-step="Toppings" tabindex="0">Toppings</div>
+      <div class="step" data-step="Sauces" tabindex="0">Sauces</div>
+      <div class="step" data-step="Review" tabindex="0">Review</div>
+    </nav>
+    <main class="builder-area">
+      <section class="menu-section" id="Bases-section">
+        <div class="menu-header">Choose Your Base</div>
+        <div class="options" data-category="Bases">
+          <div tabindex="0" class="option-card" data-name="Tri-Colour Quinoa" data-price="2.5" data-info="A colorful mix of red, white, and black quinoa, packed with protein and fiber.">
+            <img src="https://images.unsplash.com/photo-1604908814378-f1a4fca173f3?auto=format&fit=crop&w=120&q=80" alt="Tri-Colour Quinoa" />
+            <div class="option-info">Tri-Colour Quinoa <span class="info-icon" tabindex="0">i</span></div>
+            <div class="option-price">$2.5</div>
+          </div>
+          <div tabindex="0" class="option-card" data-name="Brown Rice" data-price="2" data-info="Whole grain rice with a nutty flavor and chewy texture, rich in fiber.">
+            <img src="https://images.unsplash.com/photo-1580135497016-96ed3f88178c?auto=format&fit=crop&w=120&q=80" alt="Brown Rice" />
+            <div class="option-info">Brown Rice <span class="info-icon" tabindex="0">i</span></div>
+            <div class="option-price">$2</div>
+          </div>
+          <!-- Additional ingredients similar pattern with info -->
+          <!-- you can replicate with data-info for hover or click -->
+        </div>
+      </section>
+      <!-- Add remaining sections: Proteins, Sides, Toppings, Sauces, Review similarly -->
+    </main>
+    <aside class="sidebar" id="animatedSidebar">
+      <h3>🧺 Your Bowl</h3>
+      <ul class="summary-list" id="summaryList"></ul>
+      <div class="price-label" id="animatedPrice">Total: $<span id="summaryPrice">0.00</span></div>
+      <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+    </aside>
+  </section>
+</div>
+
+<!-- Info Modal -->
+<div class="modal-bg" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+  <div class="modal-box">
+    <button class="modal-close" id="modalCloseBtn" aria-label="Close info popup">&times;</button>
+    <h2 class="modal-title" id="modalTitle">Ingredient Info</h2>
+    <p class="modal-desc" id="modalDesc"></p>
+  </div>
+</div>
+
+<script>
+  /* Tab switching logic */
+  const tabs = document.querySelectorAll('.tabs .tab');
+  const curatedSection = document.getElementById('curated-section');
+  const buildSection = document.getElementById('build-section');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      if(tab.id === 'tab-curated') {
+        curatedSection.style.display = 'block';
+        buildSection.style.display = 'none';
+      } else {
+        curatedSection.style.display = 'none';
+        buildSection.style.display = 'flex';
+      }
+    });
+  });
+
+  /* Build Bowl stepper and selections */
+
+  const stepNames = ["Bases","Proteins","Sides","Toppings","Sauces","Review"];
+  let currentStep = 0;
+  const selections = {Bases:null, Proteins:null, Sides:[], Toppings:[], Sauces:[]};
+
+  function showStep(idx){
+    stepNames.forEach((name,i)=>{
+      const el = document.getElementById(`${name}-section`);
+      if(el) el.style.display = i===idx ? "" : "none";
+      const stepBtn = document.querySelector(`nav.stepper .step[data-step='${name}']`);
+      if(stepBtn) stepBtn.classList.toggle("active", i===idx);
+    });
+    if(idx===5) updateSummary();
+  }
+
+  function nextStep(){
+    if(currentStep < stepNames.length-1){
+      currentStep++;
+      showStep(currentStep);
+    }
+  }
+
+  document.querySelector('nav.stepper').addEventListener('click', e=>{
+      const stepAttr = e.target.getAttribute('data-step');
+      if(stepAttr){
+        const idx = stepNames.indexOf(stepAttr);
+        if(idx !== -1){
+          currentStep = idx;
+          showStep(currentStep);
+        }
+      }
+  });
+
+  function clearSectionSelection(section){
+    document.querySelectorAll(`#${section}-section .option-card`).forEach(c=>c.classList.remove('selected'));
+  }
+
+  function handleCardSelect(card, category){
+    if(category==="Bases" || category==="Proteins"){
+      clearSectionSelection(category);
+      card.classList.add('selected');
+      selections[category] = {name: card.dataset.name, price: parseFloat(card.dataset.price)};
+      nextStep();
+    } else {
+      if(!selections[category]) selections[category] = [];
+      card.classList.toggle('selected');
+      if(card.classList.contains('selected')){
+        selections[category].push({name: card.dataset.name, price: parseFloat(card.dataset.price)});
+      } else {
+        selections[category] = selections[category].filter(x=>x.name!==card.dataset.name);
+      }
+    }
+    updateSummary();
+  }
+
+  document.querySelectorAll('.option-card').forEach(card=>{
+    const category = card.parentNode.getAttribute('data-category');
+    card.addEventListener('click', ()=>handleCardSelect(card, category));
+    card.addEventListener('keydown', e=>{
+      if(e.key==="Enter" || e.key===" "){
+        handleCardSelect(card, category);
+        e.preventDefault();
+      }
+    });
+  });
+
+
+  /* Summary update with animation */
+
+  function updateSummary(){
+    const list = document.getElementById('summaryList');
+    list.innerHTML = '';
+    let total = 0;
+    const summaryItems = [];
+    if(selections.Bases){
+      summaryItems.push({cat:"Bases", ...selections.Bases});
+      total += selections.Bases.price;
+    }
+    if(selections.Proteins){
+      summaryItems.push({cat:"Proteins", ...selections.Proteins});
+      total += selections.Proteins.price;
+    }
+    selections.Sides.forEach(x=>{
+      summaryItems.push({cat:"Sides", ...x});
+      total += x.price;
+    });
+    selections.Toppings.forEach(x=>{
+      summaryItems.push({cat:"Toppings", ...x});
+      total += x.price;
+    });
+    selections.Sauces.forEach(x=>{
+      summaryItems.push({cat:"Sauces", ...x});
+      total += x.price;
+    });
+    summaryItems.forEach((item,i)=>{
+      const li = document.createElement('li');
+      li.style.animationDelay = `${i*60}ms`;
+      li.textContent = `${item.cat}: `;
+      const span = document.createElement('span');
+      span.textContent = `${item.name} ($${item.price.toFixed(2)})`;
+      li.appendChild(span);
+      list.appendChild(li);
+    });
+    const priceBox = document.getElementById('animatedPrice');
+    priceBox.classList.remove('animated');
+    document.getElementById('summaryPrice').textContent = total.toFixed(2);
+    window.requestAnimationFrame(()=>{
+      priceBox.classList.add('animated');
+    });
+    setTimeout(()=>{
+      priceBox.classList.remove('animated');
+    },400);
+  }
+
+  document.getElementById('checkoutBtn').onclick = () => {
+    alert("Thank you! Your healthy bowl is ready. Total: $"+document.getElementById('summaryPrice').textContent);
+  }
+
+  showStep(currentStep);
+
+  /* === Ingredient Info Popups === */
+  const modal = document.getElementById('infoModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  
+  function openModal(title, desc){
+    modalTitle.textContent = title;
+    modalDesc.textContent = desc;
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    modalCloseBtn.focus();
+  }
+  function closeModal(){
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+  modalCloseBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e)=>{
+    if(e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && modal.classList.contains('active')){
+      closeModal();
+    }
+  });
+  
+  document.querySelectorAll('.info-icon').forEach(icon=>{
+    icon.addEventListener('click', e=>{
+      const optionCard = e.target.closest('.option-card');
+      if(optionCard){
+        openModal(optionCard.dataset.name, optionCard.dataset.info);
+      }
+    });
+    icon.addEventListener('keydown', e=>{
+      if(e.key==="Enter" || e.key===" "){
+        const optionCard = e.target.closest('.option-card');
+        if(optionCard){
+          openModal(optionCard.dataset.name, optionCard.dataset.info);
+        }
+        e.preventDefault();
+      }
+    });
+  });
+
+</script>
+</body>
+</html>

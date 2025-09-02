@@ -1,0 +1,104 @@
+:root {
+  /* --primary-color:#C9F31D;     */
+  --primary-color: #5AEF90;
+}
+.product-page .product-page-content,
+.product-page .page-products{
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 180px 0 80px;
+}
+.product-page .product-page-content .title{
+    font-size: 3rem;
+    font-weight: 600;
+}
+.product-page .product-contents {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  column-gap: 25px;
+  row-gap: 45px;
+  margin-top: 75px;
+}
+.product-page .product-contents .product-card img {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 0;
+  margin-bottom: 12px;
+}
+.product-page .product-contents .product-card .card-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 15px 0;
+  margin: 0;
+  margin-bottom: 12px;
+}
+.product-page .product-contents .product-card .card-description {
+  font-size: 1.5rem;
+  text-align: left;
+  margin: 0;
+  line-height: 1.5;
+}
+.product-page .single-product-contents {
+  display: flex;
+  column-gap: 45px;
+}
+.product-page .single-product-contents .section-right {
+  width: 50%;
+}
+.product-page .single-product-contents .section-left {
+  width: 50%;
+  position: sticky;
+  top: 150px;
+  height: fit-content;
+}
+.product-page .single-product-contents .section-left img {
+  width: 100%;
+}
+.product-page .single-product-contents .section-right .proudct-title {
+  font-size: 2.5rem;
+  margin: 0;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+.product-page .single-product-contents .section-right .product-price, .product-page .single-product-contents .section-right .model-no {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+.product-page .single-product-contents .section-right span {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin-right: 8px;
+  /* opacity: .4; */
+  filter: brightness(0.6);
+}
+.product-page .single-product-contents .section-right .btn-2 {
+  width: fit-content;
+  margin: 30px 0;
+}
+.product-page .single-product-contents .section-right .product-description {
+  margin: 45px 0 0;
+}
+.product-page .single-product-contents .section-right .product-description p {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+@media (width < 800px) {
+  .product-page .single-product-contents {
+    flex-direction: column;
+  }
+  .product-page .single-product-contents .section-left {
+    width: 100%;
+    top: 0;
+    position: relative;
+  }
+}
+.productSwiperThumb .swiper-slide {
+  opacity: 0.4;
+}
+.productSwiperThumb .swiper-slide.swiper-slide-thumb-active {
+  opacity: 1;
+}

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FitGreen</title>
+
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+    </script>
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/blog.css">
+    <link rel="stylesheet" href="css/folio.css">
+    <link rel="stylesheet" href="css/about-us.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/fitgreen-logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/fitgreen-logo.png">
+    <link rel="manifest" href="site.webmanifest">
+
+</head>
+
+
+<body id="top">
+
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+
+    <input class="chat-menu hidden" id="offchat-menu" type="checkbox" style="display: none;"/>
+<div class="sticky-button" id="sticky-button">
+  <label for="offchat-menu">
+    <svg class="chat-icon" viewBox="0 0 24 24">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7 8.5 7 9.71C7 10.93 7.89 12.1 8 12.27C8.14 12.44 9.76 14.94 12.25 16C12.84 16.27 13.3 16.42 13.66 16.53C14.25 16.72 14.79 16.69 15.22 16.63C15.7 16.56 16.68 16.03 16.89 15.45C17.1 14.87 17.1 14.38 17.04 14.27C16.97 14.17 16.81 14.11 16.56 14C16.31 13.86 15.09 13.26 14.87 13.18C14.64 13.1 14.5 13.06 14.31 13.3C14.15 13.55 13.67 14.11 13.53 14.27C13.38 14.44 13.24 14.46 13 14.34C12.74 14.21 11.94 13.95 11 13.11C10.26 12.45 9.77 11.64 9.62 11.39C9.5 11.15 9.61 11 9.73 10.89C9.84 10.78 10 10.6 10.1 10.45C10.23 10.31 10.27 10.2 10.35 10.04C10.43 9.87 10.39 9.73 10.33 9.61C10.27 9.5 9.77 8.26 9.56 7.77C9.36 7.29 9.16 7.35 9 7.34C8.86 7.34 8.7 7.33 8.53 7.33Z" />
+    </svg>
+    <svg class="close-icon" viewBox="0 0 512 512">
+      <path d="M278.6 256l68.2-68.2c6.2-6.2 6.2-16.4 0-22.6-6.2-6.2-16.4-6.2-22.6 0L256 233.4l-68.2-68.2c-6.2-6.2-16.4-6.2-22.6 0-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3l68.2 68.2-68.2 68.2c-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3 6.2 6.2 16.4 6.2 22.6 0l68.2-68.2 68.2 68.2c6.2 6.2 16.4 6.2 22.6 0 6.2-6.2 6.2-16.4 0-22.6L278.6 256z" />
+    </svg>
+  </label>
+</div>
+
+<div class="sticky-chat">
+  <div class="chat-content">
+    <div class="chat-header">
+      <svg viewBox="0 0 32 32">
+        <path d="M24,22a1,1,0,0,1-.64-.23L18.84,18H17A8,8,0,0,1,17,2h6a8,8,0,0,1,2,15.74V21a1,1,0,0,1-.58.91A1,1,0,0,1,24,22ZM17,4a6,6,0,0,0,0,12h2.2a1,1,0,0,1,.64.23L23,18.86V16.92a1,1,0,0,1,.86-1A6,6,0,0,0,23,4Z" />
+        <rect height="2" width="2" x="19" y="9"></rect>
+        <rect height="2" width="2" x="14" y="9"></rect>
+        <rect height="2" width="2" x="24" y="9"></rect>
+        <path d="M8,30a1,1,0,0,1-.42-.09A1,1,0,0,1,7,29V25.74a8,8,0,0,1-1.28-15,1,1,0,1,1,.82,1.82,6,6,0,0,0,1.6,11.4,1,1,0,0,1,.86,1v1.94l3.16-2.63A1,1,0,0,1,12.8,24H15a5.94,5.94,0,0,0,4.29-1.82,1,1,0,0,1,1.44,1.4A8,8,0,0,1,15,26H13.16L8.64,29.77A1,1,0,0,1,8,30Z" />
+      </svg>
+      <div class="title">Please chat with our team <span>An admin will respond within a few minutes.</span>
+      </div>
+    </div>
+    <div class="chat-text"><span>Hello, is there anything we can assist you with?</span>
+      <span class="typing">
+        <svg viewBox="0 0 512 512">
+          <circle cx="256" cy="256" r="48"></circle>
+          <circle cx="416" cy="256" r="48"></circle>
+          <circle cx="96" cy="256" r="48"></circle>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <a class="chat-button" href="https://api.whatsapp.com/send?phone=6296602758" rel="nofollow noreferrer" target="_blank">
+    <span>Type a message</span>
+    <svg viewBox="0 0 32 32">
+      <path d="M19.47,31a2,2,0,0,1-1.8-1.09l-4-7.57a1,1,0,0,1,1.77-.93l4,7.57L29,3.06,3,12.49l9.8,5.26,8.32-8.32a1,1,0,0,1,1.42,1.42l-8.85,8.84a1,1,0,0,1-1.17.18L2.09,14.33a2,2,0,0,1,.25-3.72L28.25,1.13a2,2,0,0,1,2.62,2.62L21.39,29.66A2,2,0,0,1,19.61,31Z" />
+    </svg>
+  </a>
+</div>
+
+
+    <!-- page wrap
+    ================================================== -->
+    <div id="page" class="s-pagewrap">
+
+
+        <!-- # site header 
+        ================================================== -->
+        <header class="s-header">
+
+            <div class="row s-header__inner">
+
+                <div class="s-header__block">
+                    <div class="s-header__logo">
+                        <a class="logo" href="/">
+                            <img src="images/fitgreen-logo.png" alt="Homepage">
+                        </a>
+                    </div>
+
+                    <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
+                </div> <!-- end s-header__block -->
+
+                <nav class="s-header__nav">
+
+                    <ul class="s-header__menu-links">
+                        
+                        <li><a href="about-us.html" class="smoothscroll">About Us</a></li>
+                        <li><a href="#" class="smoothscroll">Menu</a></li>
+                        <li><a href="products.html" class="smoothscroll">Bowls</a></li>
+                        <!-- <li><a href="/blogs.html" class="smoothscroll">Blogs</a></li> -->
+                        <li><a href="contact.html" class="smoothscroll">Contact</a></li>
+
+                    </ul> <!-- s-header__menu-links -->
+
+                    <ul class="s-header__social">
+                        <li>
+                            <a href="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:">
+                                    <path
+                                        d="M20,3H4C3.447,3,3,3.448,3,4v16c0,0.552,0.447,1,1,1h8.615v-6.96h-2.338v-2.725h2.338v-2c0-2.325,1.42-3.592,3.5-3.592 c0.699-0.002,1.399,0.034,2.095,0.107v2.42h-1.435c-1.128,0-1.348,0.538-1.348,1.325v1.735h2.697l-0.35,2.725h-2.348V21H20 c0.553,0,1-0.448,1-1V4C21,3.448,20.553,3,20,3z">
+                                    </path>
+                                </svg>
+                                <span class="u-screen-reader-text">Facebook</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:">
+                                    <path
+                                        d="M19.633,7.997c0.013,0.175,0.013,0.349,0.013,0.523c0,5.325-4.053,11.461-11.46,11.461c-2.282,0-4.402-0.661-6.186-1.809 c0.324,0.037,0.636,0.05,0.973,0.05c1.883,0,3.616-0.636,5.001-1.721c-1.771-0.037-3.255-1.197-3.767-2.793 c0.249,0.037,0.499,0.062,0.761,0.062c0.361,0,0.724-0.05,1.061-0.137c-1.847-0.374-3.23-1.995-3.23-3.953v-0.05 c0.537,0.299,1.16,0.486,1.82,0.511C3.534,9.419,2.823,8.184,2.823,6.787c0-0.748,0.199-1.434,0.548-2.032 c1.983,2.443,4.964,4.04,8.306,4.215c-0.062-0.3-0.1-0.611-0.1-0.923c0-2.22,1.796-4.028,4.028-4.028 c1.16,0,2.207,0.486,2.943,1.272c0.91-0.175,1.782-0.512,2.556-0.973c-0.299,0.935-0.936,1.721-1.771,2.22 c0.811-0.088,1.597-0.312,2.319-0.624C21.104,6.712,20.419,7.423,19.633,7.997z">
+                                    </path>
+                                </svg>
+                                <span class="u-screen-reader-text">Twitter</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:">
+                                    <path
+                                        d="M11.999,7.377c-2.554,0-4.623,2.07-4.623,4.623c0,2.554,2.069,4.624,4.623,4.624c2.552,0,4.623-2.07,4.623-4.624 C16.622,9.447,14.551,7.377,11.999,7.377L11.999,7.377z M11.999,15.004c-1.659,0-3.004-1.345-3.004-3.003 c0-1.659,1.345-3.003,3.004-3.003s3.002,1.344,3.002,3.003C15.001,13.659,13.658,15.004,11.999,15.004L11.999,15.004z">
+                                    </path>
+                                    <circle cx="16.806" cy="7.207" r="1.078"></circle>
+                                    <path
+                                        d="M20.533,6.111c-0.469-1.209-1.424-2.165-2.633-2.632c-0.699-0.263-1.438-0.404-2.186-0.42 c-0.963-0.042-1.268-0.054-3.71-0.054s-2.755,0-3.71,0.054C7.548,3.074,6.809,3.215,6.11,3.479C4.9,3.946,3.945,4.902,3.477,6.111 c-0.263,0.7-0.404,1.438-0.419,2.186c-0.043,0.962-0.056,1.267-0.056,3.71c0,2.442,0,2.753,0.056,3.71 c0.015,0.748,0.156,1.486,0.419,2.187c0.469,1.208,1.424,2.164,2.634,2.632c0.696,0.272,1.435,0.426,2.185,0.45 c0.963,0.042,1.268,0.055,3.71,0.055s2.755,0,3.71-0.055c0.747-0.015,1.486-0.157,2.186-0.419c1.209-0.469,2.164-1.424,2.633-2.633 c0.263-0.7,0.404-1.438,0.419-2.186c0.043-0.962,0.056-1.267,0.056-3.71s0-2.753-0.056-3.71C20.941,7.57,20.801,6.819,20.533,6.111z M19.315,15.643c-0.007,0.576-0.111,1.147-0.311,1.688c-0.305,0.787-0.926,1.409-1.712,1.711c-0.535,0.199-1.099,0.303-1.67,0.311 c-0.95,0.044-1.218,0.055-3.654,0.055c-2.438,0-2.687,0-3.655-0.055c-0.569-0.007-1.135-0.112-1.669-0.311 c-0.789-0.301-1.414-0.923-1.719-1.711c-0.196-0.534-0.302-1.099-0.311-1.669c-0.043-0.95-0.053-1.218-0.053-3.654 c0-2.437,0-2.686,0.053-3.655c0.007-0.576,0.111-1.146,0.311-1.687c0.305-0.789,0.93-1.41,1.719-1.712 c0.534-0.198,1.1-0.303,1.669-0.311c0.951-0.043,1.218-0.055,3.655-0.055c2.437,0,2.687,0,3.654,0.055 c0.571,0.007,1.135,0.112,1.67,0.311c0.786,0.303,1.407,0.925,1.712,1.712c0.196,0.534,0.302,1.099,0.311,1.669 c0.043,0.951,0.054,1.218,0.054,3.655c0,2.436,0,2.698-0.043,3.654H19.315z">
+                                    </path>
+                                </svg>
+                                <span class="u-screen-reader-text">Instagram</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+                                    <path
+                                        d="M20.66 6.98a9.932 9.932 0 0 0-3.641-3.64C15.486 2.447 13.813 2 12 2s-3.486.447-5.02 1.34c-1.533.893-2.747 2.107-3.64 3.64S2 10.187 2 12s.446 3.487 1.34 5.02a9.924 9.924 0 0 0 3.641 3.64C8.514 21.553 10.187 22 12 22s3.486-.447 5.02-1.34a9.932 9.932 0 0 0 3.641-3.64C21.554 15.487 22 13.813 22 12s-.446-3.487-1.34-5.02zM12 3.66c2 0 3.772.64 5.32 1.919-.92 1.174-2.286 2.14-4.1 2.9-1.002-1.813-2.088-3.327-3.261-4.54A7.715 7.715 0 0 1 12 3.66zM5.51 6.8a8.116 8.116 0 0 1 2.711-2.22c1.212 1.201 2.325 2.7 3.34 4.5-2 .6-4.114.9-6.341.9-.573 0-1.006-.013-1.3-.04A8.549 8.549 0 0 1 5.51 6.8zM3.66 12c0-.054.003-.12.01-.2.007-.08.01-.146.01-.2.254.014.641.02 1.161.02 2.666 0 5.146-.367 7.439-1.1.187.373.381.793.58 1.26-1.32.293-2.674 1.006-4.061 2.14S6.4 16.247 5.76 17.5c-1.4-1.587-2.1-3.42-2.1-5.5zM12 20.34c-1.894 0-3.594-.587-5.101-1.759.601-1.187 1.524-2.322 2.771-3.401 1.246-1.08 2.483-1.753 3.71-2.02a29.441 29.441 0 0 1 1.56 6.62 8.166 8.166 0 0 1-2.94.56zm7.08-3.96a8.351 8.351 0 0 1-2.58 2.621c-.24-2.08-.7-4.107-1.379-6.081.932-.066 1.765-.1 2.5-.1.799 0 1.686.034 2.659.1a8.098 8.098 0 0 1-1.2 3.46zm-1.24-5c-1.16 0-2.233.047-3.22.14a27.053 27.053 0 0 0-.68-1.62c2.066-.906 3.532-2.006 4.399-3.3 1.2 1.414 1.854 3.027 1.96 4.84-.812-.04-1.632-.06-2.459-.06z">
+                                    </path>
+                                </svg>
+                                <span class="u-screen-reader-text">Dribbble</span>
+                            </a>
+                        </li>
+                    </ul> <!-- s-header__social -->
+
+                </nav> <!-- end s-header__nav -->
+
+            </div> <!-- end s-header__inner -->
+
+        </header> <!-- end s-header -->
+
+
+        <!-- # site-content
+        ================================================== -->
+        <section id="content" class="s-content">
+
+
+            <!-- intro
+            ----------------------------------------------- -->
+            <section id="intro" class="s-intro target-section">
+
+                <div class="s-intro__bg"></div>
+
+                <div class="row s-intro__content">
+
+                    <div class="s-intro__slider">
+                        <div class="s-intro__slide"><img src="/images/intro-bg.jpg" alt="Slide 1"></div>
+                        <div class="s-intro__slide"><img src="/images/intro-bg2.jpg" alt="Slide 2"></div>
+                        <div class="s-intro__slide"><img src="/images/intro-bg3.jpg" alt="Slide 3"></div>
+                        <div class="s-intro__slide"><img src="/images/intro-bg.jpg" alt="Slide 4"></div>
+                        <div class="s-intro__slide"><img src="/images/intro-bg2.jpg" alt="Slide 5"></div>
+                        <div class="s-intro__slide"><img src="/images/intro-bg3.jpg" alt="Slide 6"></div>
+                        <div class="s-intro__slide"><img src="/images/intro-bg.jpg" alt="Slide 7"></div>
+                    </div>
+
+                    <div class="s-intro__dots"></div>
+
+
+                    <div class="column lg-12 s-intro__content-inner">
+
+                        <h1 class="s-intro__content-title">
+                            Food designed to <br>
+                            satisfy the palate, <br>
+                            nourish the body,<br>
+                            and fit effortlessly<br>
+                            into modern life.
+                        </h1>
+
+                        <div class="s-intro__content-buttons">
+                            <a href="#download" class="btn btn--stroke s-intro__content-btn smoothscroll">Know More</a>
+                            <a href="https://player.vimeo.com/video/14592941?color=f26522&title=0&byline=0&portrait=0"
+                                class="s-intro__content-video-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+                                    <path d="M7 6v12l10-6z"></path>
+                                </svg>
+                            </a>
+                        </div>
+
+                    </div> <!-- s-intro__content-inner -->
+
+                </div> <!-- s-intro__content -->
+
+                <div class="s-intro__scroll-down">
+                    <a href="#about" class="smoothscroll">
+                        <span>Scroll Down</span>
+                    </a>
+                </div> <!-- s-intro__scroll-down -->
+
+            </section> <!-- end s-intro -->
+
+            <!-- portfolio
+            ----------------------------------------------- -->
+            <section id="folio" class="s-folio target-section">
+
+                <div class="row section-header" data-num="+ Bowls that break the rules">
+                    <!-- <h3 class="column lg-12 section-header__pretitle text-pretitle">Kolkata, Your Plate Tells a Story —
+                        And It’s Not All Sweet.</h3> -->
+                    <div class="column lg-6 stack-on-1100 section-header__primary">
+
+                        <p>
+                            Kolkata’s love affair with food is legendary —
+                            biryani, phuchka, kathi rolls, samosas, telebhaja…
+                            a feast for the senses.
+                        </p>
+                        <p>
+                            It’s not just indulgence — it’s silent wear and tear on our health.
+                        </p>
+
+                        <p>
+                            The truth? Eating well is no longer optional.
+                        </p>
+
+                        <p>
+                            But “healthy” shouldn’t mean tasteless, dry salads or bland boiled food.
+                            It can be rich in flavour, joyful to eat, and still respect your body.
+                        </p>
+
+                        <p>
+                            FitGreen exists for exactly that —
+                            food that excites your palate, fuels your day,
+                            and future-proofs your health.
+                        </p>
+
+
+
+                    </div>
+
+                    <div class="column lg-6 stack-on-1100 section-header__primary">
+
+                        <ul class="health-stats">
+                            <li>31% of adults are overweight or obese — higher than the urban India average.</li>
+                            <li>15% live with Type 2 diabetes — more than most Indian metros.</li>
+                            <li>1 in 3 adults has high cholesterol.</li>
+                            <li>Nearly 1 in 4 lives with hypertension.</li>
+                            <li>A growing number are battling metabolic syndrome before they even hit 40.</li>
+                        </ul>
+                    </div>
+
+                </div> <!-- end section-header -->
+
+                <section class="cmp-section">
+                <div class="cmp-wrapper">
+                    <div class="cmp-before">
+                    <img class="cmp-image" src="images/products/prod1 (2).png" alt="Before" draggable="false" />
+                    </div>
+                    <div class="cmp-after">
+                    <img class="cmp-image" src="images/products/prod2.png" alt="After" draggable="false" />
+                    </div>
+                    <div class="cmp-scroller" aria-label="Drag to compare" role="slider" tabindex="0">
+                    <svg class="cmp-scroller__thumb" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+                        <polygon points="0 50 37 68 37 32 0 50" style="fill:#fff"/>
+                        <polygon points="100 50 64 32 64 68 100 50" style="fill:#fff"/>
+                    </svg>
+                    </div>
+                </div>
+                </section>
+            </section> <!-- end s-folio -->
+
+
+
+
+            <!-- about
+            ----------------------------------------------- -->
+            <section id="about" class="s-about target-section mb-5">
+
+                <div class="row section-header" data-num="About Us">
+                    <h3 class="column lg-12 section-header__pretitle text-pretitle">Bowls That Break the Rules</h3>
+                    <div class="column lg-6 stack-on-1100">
+
+                        <div class="column lg-6 stack-on-1100 section-header__secondary col-md-6">
+                            <div class="rotating-text">
+                                <p style="color: #759639;">Nutrition-dense</p>
+                                <p style="color: #C1A27F;">Flavour-rich</p>
+                                <p style="color: #7BC143;">Macro-balanced</p>
+                                <p style="color: #C1A27F;">Smart eating</p>
+                                <p style="color: #7BC143;">Everyday Craving</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column col-md-6 video-col">
+                        <div class="video-wrapper">
+                            <video muted loop playsinline controls poster="images/thumb-about.png">
+                                <source src="images/Fitgreen_Mr. Anindya Datta_2508.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+
+                    </div>
+                </div> <!-- end section-header -->
+            </section>
+
+
+
+            <!-- services
+            ----------------------------------------------- -->
+            <section id="services" class="s-services target-section">
+
+                <div class="row section-header" data-num="Community">
+                    <h3 class="column lg-12 section-header__pretitle text-pretitle">Join the FitGreen Inner Circle</h3>
+                    <div class="column lg-6 stack-on-1100 section-header__primary">
+                        <h2 class="title text-display-1">
+                            Be the first to taste Kolkata’s smartest bowls.
+                        </h2>
+                    </div>
+                    <div class="column lg-6 stack-on-1100 section-header__secondary">
+                        <h4 style="margin-top: 0;">Sign up now and enjoy:</h4>
+                        <ul>
+                            <li>Exclusive launch offers</li>
+                            <li>Priority invites to tasting events</li>
+                            <li>Early access to new bowls & combos</li>
+
+                        </ul>
+                    </div>
+                </div> <!-- end section-header -->
+
+                <div class="row">
+
+                    <div class="community-content lg-12">
+                        <div class="community-image">
+                            <img src="images/join-community.jpg" alt="Our Community">
+                        </div>
+                        <div class="community-cta">
+
+                            <button class="join-btn">Join Now</button>
+                        </div>
+                    </div>
+
+                </div> <!-- end process-list -->
+
+            </section> <!-- end s-services -->
+
+
+            <!-- Store location -->
+            <section id="services" class="s-services target-section">
+
+                <div class="row section-header" data-num="STORE">
+                    <h3 class="column lg-12 section-header__pretitle text-pretitle">Find Our Store</h3>
+                    <div class="column lg-6 stack-on-1100 section-header__primary">
+                        <h2 class="title text-display-1">
+                            Your Shortcut to Smarter Eating
+                        </h2>
+                    </div>
+                    <div class="column lg-6 stack-on-1100 section-header__secondary">
+                        <p class="desc">
+                            We’re right here in the heart of Kolkata - close enough to make healthy eating your everyday
+                            habit.
+                        </p>
+                    </div>
+                </div> <!-- end section-header -->
+
+                <div class="row">
+
+                    <div class="community-content lg-12">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.2784824454734!2d88.42902401173419!3d22.56868547940911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275ad93c8289b%3A0xc099131033eb5917!2sSDF%20Building%2C%20GP%20Block%2C%20Sector%20V%2C%20Bidhannagar%2C%20Kolkata%2C%20West%20Bengal%20700091!5e0!3m2!1sen!2sin!4v1755171358101!5m2!1sen!2sin"
+                            width="1200" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <!-- <div class="community-cta">
+
+                                <button class="join-btn">Stores Near by</button>
+                            </div> -->
+                    </div>
+
+                </div> <!-- end process-list -->
+
+            </section> <!-- end s-services -->
+        </section> <!-- end content -->
+
+        <!-- Blogs Start -->
+
+        <section class="cards-wrapper">
+
+            <div class="row section-header" data-num="Blogs">
+                <h3 class="column lg-12 section-header__pretitle text-pretitle">View Our Blogs</h3>
+            </div> <!-- end section-header -->
+
+
+            <div class="row">
+
+                <div class="card-grid-space lg-4">
+                    <a class="card" href="" style="--bg-img: url(/images/blog/1.jpg)">
+                        <div>
+                            <p>Macros Made Simple: The Science of Eating Right.</p>
+                            <div class="date">6 Oct 2017</div>
+                            <div class="tags">
+                                <div class="tag">View</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="card-grid-space lg-4">
+
+                    <a class="card" href="#" style="--bg-img: url('/images/blog/2.jpg')">
+                        <div>
+
+                            <p>The Kolkata Health Paradox: Why We’re Falling Sick in the City of Food.</p>
+                            <div class="date">9 Oct 2017</div>
+                            <div class="tags">
+                                <div class="tag">View</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="card-grid-space lg-4">
+
+                    <a class="card" href="" style="--bg-img: url('/images/blog/3.jpg')">
+                        <div>
+
+                            <p>Portion Control: The Secret Sauce to Eating What You Love.</p>
+                            <div class="date">14 Oct 2025</div>
+                            <div class="tags">
+                                <div class="tag">View</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="community-cta" style="margin-top: 40px;">
+                    <button class="join-btn">All Blogs</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blogs End -->
+
+
+
+        <!-- FAQ Start -->
+
+
+        <section class="faq-section cards-wrapper">
+            <div class="row section-header" data-num="Ask Fitgreen">
+                <h3 class="column lg-12 section-header__pretitle text-pretitle">Questions on Your Plate? We’ve Got
+                    Answers</h3>
+            </div> <!-- end section-header -->
+
+            <div class="container">
+
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What exactly is FitGreen?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>FitGreen is a new-age food brand that creates nutrition-dense, macro-balanced bowls —
+                                designed to be delicious, satisfying, and good for your body, every single day.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Is this diet food?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>No. Diet food often means restrictive, bland, and temporary. FitGreen is about real,
+                                flavour-packed meals you’d happily eat daily — built with the right balance of protein,
+                                carbs, and fats to fuel your lifestyle.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What makes FitGreen different?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Most “healthy” options focus only on calories or trends. We focus on science-backed
+                                nutrition, portion control, and taste that rivals comfort food — so healthy eating
+                                becomes a habit, not a punishment.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Why should I care about macros?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Macros — protein, carbs, and fats — determine how your body uses energy. Balanced macros
+                                help you stay full longer, manage weight, and keep your metabolism strong. FitGreen
+                                bowls are designed with ideal macro ratios for daily health.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            I love Kolkata’s street food. How does FitGreen fit in?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We get it — Kolkata is a foodie paradise. But our city’s rising rates of diabetes,
+                                obesity, and heart disease show it’s time for a smart balance. FitGreen lets you enjoy
+                                tasty meals without the health downsides of oily, sugar-heavy food.</p>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </section>
+
+    </div> <!-- end s-clients -->
+
+    <!-- FAQ End -->
+
+
+    <!-- # site-footer
+        ================================================== -->
+    <footer id="footer" class="s-footer target-section">
+
+        <div class="row section-header" data-num="Contact Us">
+            <h3 class="column lg-12 section-header__pretitle text-pretitle">Get In Touch</h3>
+            <div class="column lg-6 stack-on-1100 section-header__primary">
+                <h2 class="title text-display-1">
+                    Have a question, a collab idea, or just craving a better bowl?
+                    We’re all ears (and taste buds).
+                </h2>
+            </div>
+            <div class="column lg-6 stack-on-1100 section-header__secondary">
+
+                <div class="contact-block">
+                    <h6>Where To Find Us</h6>
+                    <p>
+                        Ground Floor, SDF Building<br> GP Block, Sector V, Salt Lake<br />
+                        Kolkata, India, West Bengal.
+                    </p>
+                </div>
+
+                <div class="contact-block">
+                    <h6>Contact Info</h6>
+                    <ul class="contact-list">
+                        <li><a href="tel:8450817711">+91-8450817711</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div> <!-- end section-header -->
+
+        <div class="row list-block block-lg-one-half block-tab-whole block-stack-on-1000 s-footer__btns">
+            <div class="column list-block__item">
+                <div class="s-footer__contact-btn">
+                    <a href="mailto:#0" class="btn btn--primary u-fullwidth">
+                        Let's Talk
+                    </a>
+                </div>
+            </div>
+
+        </div> <!-- end s-footer__btns -->
+
+        <div class="row s-footer__bottom">
+
+            <div class="column lg-6 tab-12 s-footer__bottom-left">
+                <ul class="s-footer__social">
+                    <li>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:">
+                                <path
+                                    d="M20,3H4C3.447,3,3,3.448,3,4v16c0,0.552,0.447,1,1,1h8.615v-6.96h-2.338v-2.725h2.338v-2c0-2.325,1.42-3.592,3.5-3.592 c0.699-0.002,1.399,0.034,2.095,0.107v2.42h-1.435c-1.128,0-1.348,0.538-1.348,1.325v1.735h2.697l-0.35,2.725h-2.348V21H20 c0.553,0,1-0.448,1-1V4C21,3.448,20.553,3,20,3z">
+                                </path>
+                            </svg>
+                            <span class="u-screen-reader-text">Facebook</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:">
+                                <path
+                                    d="M19.633,7.997c0.013,0.175,0.013,0.349,0.013,0.523c0,5.325-4.053,11.461-11.46,11.461c-2.282,0-4.402-0.661-6.186-1.809 c0.324,0.037,0.636,0.05,0.973,0.05c1.883,0,3.616-0.636,5.001-1.721c-1.771-0.037-3.255-1.197-3.767-2.793 c0.249,0.037,0.499,0.062,0.761,0.062c0.361,0,0.724-0.05,1.061-0.137c-1.847-0.374-3.23-1.995-3.23-3.953v-0.05 c0.537,0.299,1.16,0.486,1.82,0.511C3.534,9.419,2.823,8.184,2.823,6.787c0-0.748,0.199-1.434,0.548-2.032 c1.983,2.443,4.964,4.04,8.306,4.215c-0.062-0.3-0.1-0.611-0.1-0.923c0-2.22,1.796-4.028,4.028-4.028 c1.16,0,2.207,0.486,2.943,1.272c0.91-0.175,1.782-0.512,2.556-0.973c-0.299,0.935-0.936,1.721-1.771,2.22 c0.811-0.088,1.597-0.312,2.319-0.624C21.104,6.712,20.419,7.423,19.633,7.997z">
+                                </path>
+                            </svg>
+                            <span class="u-screen-reader-text">Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:">
+                                <path
+                                    d="M11.999,7.377c-2.554,0-4.623,2.07-4.623,4.623c0,2.554,2.069,4.624,4.623,4.624c2.552,0,4.623-2.07,4.623-4.624 C16.622,9.447,14.551,7.377,11.999,7.377L11.999,7.377z M11.999,15.004c-1.659,0-3.004-1.345-3.004-3.003 c0-1.659,1.345-3.003,3.004-3.003s3.002,1.344,3.002,3.003C15.001,13.659,13.658,15.004,11.999,15.004L11.999,15.004z">
+                                </path>
+                                <circle cx="16.806" cy="7.207" r="1.078"></circle>
+                                <path
+                                    d="M20.533,6.111c-0.469-1.209-1.424-2.165-2.633-2.632c-0.699-0.263-1.438-0.404-2.186-0.42 c-0.963-0.042-1.268-0.054-3.71-0.054s-2.755,0-3.71,0.054C7.548,3.074,6.809,3.215,6.11,3.479C4.9,3.946,3.945,4.902,3.477,6.111 c-0.263,0.7-0.404,1.438-0.419,2.186c-0.043,0.962-0.056,1.267-0.056,3.71c0,2.442,0,2.753,0.056,3.71 c0.015,0.748,0.156,1.486,0.419,2.187c0.469,1.208,1.424,2.164,2.634,2.632c0.696,0.272,1.435,0.426,2.185,0.45 c0.963,0.042,1.268,0.055,3.71,0.055s2.755,0,3.71-0.055c0.747-0.015,1.486-0.157,2.186-0.419c1.209-0.469,2.164-1.424,2.633-2.633 c0.263-0.7,0.404-1.438,0.419-2.186c0.043-0.962,0.056-1.267,0.056-3.71s0-2.753-0.056-3.71C20.941,7.57,20.801,6.819,20.533,6.111z M19.315,15.643c-0.007,0.576-0.111,1.147-0.311,1.688c-0.305,0.787-0.926,1.409-1.712,1.711c-0.535,0.199-1.099,0.303-1.67,0.311 c-0.95,0.044-1.218,0.055-3.654,0.055c-2.438,0-2.687,0-3.655-0.055c-0.569-0.007-1.135-0.112-1.669-0.311 c-0.789-0.301-1.414-0.923-1.719-1.711c-0.196-0.534-0.302-1.099-0.311-1.669c-0.043-0.95-0.053-1.218-0.053-3.654 c0-2.437,0-2.686,0.053-3.655c0.007-0.576,0.111-1.146,0.311-1.687c0.305-0.789,0.93-1.41,1.719-1.712 c0.534-0.198,1.1-0.303,1.669-0.311c0.951-0.043,1.218-0.055,3.655-0.055c2.437,0,2.687,0,3.654,0.055 c0.571,0.007,1.135,0.112,1.67,0.311c0.786,0.303,1.407,0.925,1.712,1.712c0.196,0.534,0.302,1.099,0.311,1.669 c0.043,0.951,0.054,1.218,0.054,3.655c0,2.436,0,2.698-0.043,3.654H19.315z">
+                                </path>
+                            </svg>
+                            <span class="u-screen-reader-text">Instagram</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+                                <path
+                                    d="M20.66 6.98a9.932 9.932 0 0 0-3.641-3.64C15.486 2.447 13.813 2 12 2s-3.486.447-5.02 1.34c-1.533.893-2.747 2.107-3.64 3.64S2 10.187 2 12s.446 3.487 1.34 5.02a9.924 9.924 0 0 0 3.641 3.64C8.514 21.553 10.187 22 12 22s3.486-.447 5.02-1.34a9.932 9.932 0 0 0 3.641-3.64C21.554 15.487 22 13.813 22 12s-.446-3.487-1.34-5.02zM12 3.66c2 0 3.772.64 5.32 1.919-.92 1.174-2.286 2.14-4.1 2.9-1.002-1.813-2.088-3.327-3.261-4.54A7.715 7.715 0 0 1 12 3.66zM5.51 6.8a8.116 8.116 0 0 1 2.711-2.22c1.212 1.201 2.325 2.7 3.34 4.5-2 .6-4.114.9-6.341.9-.573 0-1.006-.013-1.3-.04A8.549 8.549 0 0 1 5.51 6.8zM3.66 12c0-.054.003-.12.01-.2.007-.08.01-.146.01-.2.254.014.641.02 1.161.02 2.666 0 5.146-.367 7.439-1.1.187.373.381.793.58 1.26-1.32.293-2.674 1.006-4.061 2.14S6.4 16.247 5.76 17.5c-1.4-1.587-2.1-3.42-2.1-5.5zM12 20.34c-1.894 0-3.594-.587-5.101-1.759.601-1.187 1.524-2.322 2.771-3.401 1.246-1.08 2.483-1.753 3.71-2.02a29.441 29.441 0 0 1 1.56 6.62 8.166 8.166 0 0 1-2.94.56zm7.08-3.96a8.351 8.351 0 0 1-2.58 2.621c-.24-2.08-.7-4.107-1.379-6.081.932-.066 1.765-.1 2.5-.1.799 0 1.686.034 2.659.1a8.098 8.098 0 0 1-1.2 3.46zm-1.24-5c-1.16 0-2.233.047-3.22.14a27.053 27.053 0 0 0-.68-1.62c2.066-.906 3.532-2.006 4.399-3.3 1.2 1.414 1.854 3.027 1.96 4.84-.812-.04-1.632-.06-2.459-.06z">
+                                </path>
+                            </svg>
+                            <span class="u-screen-reader-text">Dribbble</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="column lg-6 tab-12 s-footer__bottom-right">
+                <div class="ss-copyright">
+                    <span>© Copyright Fitgreen 2025</span>
+                    <span>Design by <a href="#">Fitgreen</a></span>
+                </div>
+            </div>
+
+        </div> <!-- s-footer__bottom -->
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+                    <path d="M6 4h12v2H6zm5 10v6h2v-6h5l-6-6-6 6z"></path>
+                </svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+
+    </footer> <!-- end footer -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/folio.js"></script>
+    <!-- <script src="js/blog.js"></script> -->
+
+
+    <script>
+        // Opens sticky-chat automatically within 5 seconds of page load
+document.addEventListener("DOMContentLoaded", function () {
+  setTimeout(function () {
+    document.getElementById("offchat-menu").checked = true;
+  }, 5000);
+});
+    </script>
+
+
+
+
+</body>
+
+</html>

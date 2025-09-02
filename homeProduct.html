@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Build Your Food Bowl</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f7fafc 0%, #e4f2ed 100%);
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      color: #202833;
+    }
+    .main-header {
+      background: #24b47e;
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem 1rem 1rem;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      box-shadow: 0 4px 12px rgba(35,75,126,0.07);
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+    .stepper {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .step {
+      background: #fff;
+      border-radius: 8px;
+      padding: .5rem 1.2rem;
+      font-size: 1rem;
+      color: #24b47e;
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      opacity: 0.7;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .step.active {
+      background: #24b47e;
+      color: #fff;
+      opacity: 1;
+      box-shadow: 0 6px 22px rgba(36,180,126,0.13);
+      transform: scale(1.07);
+    }
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 2rem;
+      padding: 2rem 1rem;
+    }
+    .builder-area {
+      flex: 3;
+      min-width: 0;
+    }
+    .sidebar {
+      flex: 1.2;
+      background: #fff;
+      padding: 2rem 1.5rem;
+      border-radius: 22px;
+      box-shadow: 0 4px 22px rgba(35,75,126,0.09);
+      min-width: 300px;
+      height: fit-content;
+      margin-top: 1.5rem;
+      position: sticky;
+      top: 50px;
+    }
+    .sidebar h3 {
+      font-size: 1.4rem;
+      color: #1e6e50;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    .summary-list {
+      list-style: none;
+      margin:0; padding:0;
+      font-size: 1rem;
+      color: #183543;
+    }
+    .summary-list li {
+      margin: 0.6rem 0;
+      padding: 0.5rem 0.7rem;
+      background: #f0f5f9;
+      border-radius: 7px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: background 0.3s;
+    }
+    .price-label {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #24b47e;
+      text-align: center;
+      margin: 1.8rem 0 1rem 0;
+    }
+    .checkout-btn {
+      display: block;
+      width: 100%;
+      background: #24b47e;
+      color: #fff;
+      padding: 1rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 10px;
+      border: none;
+      margin-top: 0.7rem;
+      cursor: pointer;
+      transition: background 0.28s;
+    }
+    .checkout-btn:active, .checkout-btn:hover {
+      background: #198d5b;
+    }
+    .menu-section {
+      margin-bottom: 2.5rem;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(36,180,126,0.07);
+      padding: 1.6rem 2rem;
+    }
+    .menu-header {
+      font-size: 1.25rem;
+      color: #183543;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #24b47e18;
+      padding-bottom: .7rem;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px,1fr));
+      gap: 1.3rem;
+    }
+    .option-card {
+      background: #fafafa;
+      padding: 1rem 0.7rem;
+      border-radius: 12px;
+      box-shadow: 0 1.5px 8px rgba(36,180,126,0.11);
+      border: 2px solid transparent;
+      text-align: center;
+      cursor: pointer;
+      transition: border 0.3s, box-shadow 0.3s, transform 0.22s;
+      position: relative;
+      font-size: 0.99rem;
+      outline: none;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .option-card:hover,.option-card:focus {
+      border-color: #24b47e;
+      box-shadow: 0 4px 22px rgba(36,180,126,0.12);
+      transform: scale(1.04);
+    }
+    .option-card.selected {
+      border-color: #24b47e;
+      background: #e5f9ef;
+      box-shadow: 0 8px 26px rgba(36,180,126,0.13);
+      font-weight: 700;
+    }
+    .option-card img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      user-select: none;
+      margin-bottom: 0.4rem;
+      transition: transform 0.18s;
+    }
+    .option-card.selected img {
+      transform: scale(1.11);
+    }
+    .option-info {
+      font-size: 0.97rem;
+      color: #1d4257;
+      margin-top: .2rem;
+      font-weight: 600;
+    }
+    .option-price {
+      display: block;
+      margin: 2px 0 0 0;
+      font-size: .99rem;
+      color: #24b47e;
+      font-weight: 700;
+    }
+    @media (max-width: 900px) {
+      .container { flex-direction: column; gap: 0;}
+      .sidebar { margin-top: 0; min-width: unset; position: static;}
+      .builder-area, .sidebar { width: 100%; }
+    }
+    @media (max-width: 500px) {
+      .main-header { font-size: 1.25rem; padding: 1.1rem 0.6rem;}
+      .container { padding: 0.5rem;}
+      .menu-section { padding: 1rem 0.4rem;}
+      .stepper { gap: 0.4rem; font-size:.92rem; flex-wrap: wrap;}
+      .sidebar { padding: 1.1rem 0.6rem;}
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">🥗 Build Your Own Healthy Bowl</header>
+  <nav class="stepper" id="stepper">
+    <div class="step active" data-step="Bases">Bases</div>
+    <div class="step" data-step="Proteins">Proteins</div>
+    <div class="step" data-step="Sides">Sides</div>
+    <div class="step" data-step="Toppings">Toppings</div>
+    <div class="step" data-step="Sauces">Sauces</div>
+    <div class="step" data-step="Review">Review</div>
+  </nav>
+  <div class="container">
+    <main class="builder-area">
+      <section class="menu-section" id="Bases-section">
+        <div class="menu-header">Choose Your Base</div>
+        <div class="options" data-category="Bases">
+          <div class="option-card" tabindex="0" data-name="Tri-Colour Quinoa" data-price="2.5"><img src="https://img.icons8.com/color/96/quinoa.png" alt="Tri-Colour Quinoa"/><span class="option-info">Tri-Colour Quinoa</span><span class="option-price">$2.5</span></div>
+          <div class="option-card" tabindex="0" data-name="Brown Rice" data-price="2"><img src="https://img.icons8.com/color/96/rice.png" alt="Brown Rice"/><span class="option-info">Brown Rice</span><span class="option-price">$2</span></div>
+          <div class="option-card" tabindex="0" data-name="Mixed Greens" data-price="2"><img src="https://img.icons8.com/color/96/salad.png" alt="Mixed Greens"/><span class="option-info">Mixed Greens</span><span class="option-price">$2</span></div>
+          <div class="option-card" tabindex="0" data-name="Whole Wheat Noodles" data-price="2"><img src="https://img.icons8.com/color/96/noodles.png" alt="Whole Wheat Noodles"/><span class="option-info">Whole Wheat Noodles</span><span class="option-price">$2</span></div>
+          <div class="option-card" tabindex="0" data-name="White Basmati Rice" data-price="2"><img src="https://img.icons8.com/color/96/basmati.png" alt="White Basmati Rice"/><span class="option-info">White Basmati Rice</span><span class="option-price">$2</span></div>
+        </div>
+      </section>
+      <section class="menu-section" id="Proteins-section" style="display:none;">
+        <div class="menu-header">Select a Protein</div>
+        <div class="options" data-category="Proteins">
+          <div class="option-card" tabindex="0" data-name="Herb-Grilled Chicken" data-price="3"><img src="https://img.icons8.com/color/96/chicken.png" alt="Herb-Grilled Chicken"/><span class="option-info">Herb-Grilled Chicken</span><span class="option-price">$3</span></div>
+          <div class="option-card" tabindex="0" data-name="Ajwain Fish Tikka" data-price="3"><img src="https://img.icons8.com/color/96/fish-cooked.png" alt="Ajwain Fish Tikka"/><span class="option-info">Ajwain Fish Tikka</span><span class="option-price">$3</span></div>
+          <div class="option-card" tabindex="0" data-name="Grilled Tofu" data-price="2.5"><img src="https://img.icons8.com/color/96/tofu.png" alt="Grilled Tofu"/><span class="option-info">Grilled Tofu</span><span class="option-price">$2.5</span></div>
+          <div class="option-card" tabindex="0" data-name="Tandoori Chicken Tikka" data-price="3"><img src="https://img.icons8.com/color/96/chicken-box.png" alt="Tandoori Chicken Tikka"/><span class="option-info">Tandoori Chicken Tikka</span><span class="option-price">$3</span></div>
+          <div class="option-card" tabindex="0" data-name="Paneer Tikka" data-price="2.5"><img src="https://img.icons8.com/color/96/cheese.png" alt="Paneer Tikka"/><span class="option-info">Paneer Tikka</span><span class="option-price">$2.5</span></div>
+        </div>
+      </section>
+      <section class="menu-section" id="Sides-section" style="display:none;">
+        <div class="menu-header">Add Sides</div>
+        <div class="options" data-category="Sides">
+          <div class="option-card" data-name="Blanched Broccoli" data-price="1"><img src="https://img.icons8.com/color/96/broccoli.png"/><span class="option-info">Blanched Broccoli</span><span class="option-price">$1</span></div>
+          <div class="option-card" data-name="Grilled Veggies" data-price="1"><img src="https://img.icons8.com/color/96/vegetarian-food.png"/><span class="option-info">Grilled Veggies</span><span class="option-price">$1</span></div>
+          <div class="option-card" data-name="Roasted Beetroot" data-price="1"><img src="https://img.icons8.com/color/96/beet.png"/><span class="option-info">Roasted Beetroot</span><span class="option-price">$1</span></div>
+          <div class="option-card" data-name="Avocado" data-price="1.5"><img src="https://img.icons8.com/color/96/avocado.png"/><span class="option-info">Avocado</span><span class="option-price">$1.5</span></div>
+          <div class="option-card" data-name="Blanched Beans" data-price="0.8"><img src="https://img.icons8.com/color/96/green-beans.png"/><span class="option-info">Blanched Beans</span><span class="option-price">$0.8</span></div>
+          <div class="option-card" data-name="Masala Corn" data-price="1"><img src="https://img.icons8.com/color/96/corn.png"/><span class="option-info">Masala Corn</span><span class="option-price">$1</span></div>
+          <div class="option-card" data-name="Edamame" data-price="1.2"><img src="https://img.icons8.com/color/96/edamame.png"/><span class="option-info">Edamame</span><span class="option-price">$1.2</span></div>
+          <div class="option-card" data-name="Roasted Cauliflower" data-price="1"><img src="https://img.icons8.com/color/96/cauliflower.png"/><span class="option-info">Roasted Cauliflower</span><span class="option-price">$1</span></div>
+          <div class="option-card" data-name="Sprout Chaat" data-price="1"><img src="https://img.icons8.com/color/96/salad.png"/><span class="option-info">Sprout Chaat</span><span class="option-price">$1</span></div>
+          <div class="option-card" data-name="Mango & Arugula" data-price="1"><img src="https://img.icons8.com/color/96/mango.png"/><span class="option-info">Mango & Arugula</span><span class="option-price">$1</span></div>
+          <div class="option-card" data-name="Masala Green Peas" data-price="0.8"><img src="https://img.icons8.com/color/96/pea.png"/><span class="option-info">Masala Green Peas</span><span class="option-price">$0.8</span></div>
+          <div class="option-card" data-name="Sauté Beans" data-price="1"><img src="https://img.icons8.com/color/96/green-beans.png"/><span class="option-info">Sauté Beans</span><span class="option-price">$1</span></div>
+        </div>
+      </section>
+      <section class="menu-section" id="Toppings-section" style="display:none;">
+        <div class="menu-header">Pick Your Toppings</div>
+        <div class="options" data-category="Toppings">
+          <div class="option-card" data-name="Protein Seeds" data-price="0.9"><img src="https://img.icons8.com/color/96/seed.png"/><span class="option-info">Protein Seeds</span><span class="option-price">$0.9</span></div>
+          <div class="option-card" data-name="Pickled Onion" data-price="0.5"><img src="https://img.icons8.com/color/96/onion.png"/><span class="option-info">Pickled Onion</span><span class="option-price">$0.5</span></div>
+          <div class="option-card" data-name="Roasted Nuts" data-price="0.9"><img src="https://img.icons8.com/color/96/nuts.png"/><span class="option-info">Roasted Nuts</span><span class="option-price">$0.9</span></div>
+          <div class="option-card" data-name="Black Olives" data-price="0.7"><img src="https://img.icons8.com/color/96/olives.png"/><span class="option-info">Black Olives</span><span class="option-price">$0.7</span></div>
+          <div class="option-card" data-name="Roasted Garlic Flakes" data-price="0.6"><img src="https://img.icons8.com/color/96/garlic.png"/><span class="option-info">Roasted Garlic Flakes</span><span class="option-price">$0.6</span></div>
+        </div>
+      </section>
+      <section class="menu-section" id="Sauces-section" style="display:none;">
+        <div class="menu-header">Select Your Sauce</div>
+        <div class="options" data-category="Sauces">
+          <div class="option-card" data-name="Olive Oil Balsamic Dressing" data-price="0.7"><img src="https://img.icons8.com/color/96/oil.png"/><span class="option-info">Olive Oil Balsamic</span><span class="option-price">$0.7</span></div>
+          <div class="option-card" data-name="Tikka Masala" data-price="0.8"><img src="https://img.icons8.com/color/96/sauce.png"/><span class="option-info">Tikka Masala</span><span class="option-price">$0.8</span></div>
+          <div class="option-card" data-name="Chilli Garlic Sauce" data-price="0.7"><img src="https://img.icons8.com/color/96/chilli.png"/><span class="option-info">Chilli Garlic</span><span class="option-price">$0.7</span></div>
+          <div class="option-card" data-name="Biryani-Style Gravy" data-price="0.8"><img src="https://img.icons8.com/color/96/sauce.png"/><span class="option-info">Biryani Gravy</span><span class="option-price">$0.8</span></div>
+          <div class="option-card" data-name="Thai Green Curry" data-price="1"><img src="https://img.icons8.com/color/96/curry.png"/><span class="option-info">Thai Green Curry</span><span class="option-price">$1</span></div>
+          <div class="option-card" data-name="Bengali Mustard Sauce" data-price="1"><img src="https://img.icons8.com/color/96/mustard.png"/><span class="option-info">Bengali Mustard</span><span class="option-price">$1</span></div>
+        </div>
+      </section>
+    </main>
+    <aside class="sidebar">
+      <h3>🧺 Your Bowl</h3>
+      <ul class="summary-list" id="summaryList"></ul>
+      <div class="price-label">Total: $<span id="summaryPrice">0.00</span></div>
+      <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+    </aside>
+  </div>
+  <script>
+    const stepNames = ["Bases","Proteins","Sides","Toppings","Sauces","Review"];
+    let currentStep = 0;
+    const selections = {
+      Bases:null, Proteins:null, Sides:[], Toppings:[], Sauces:[]
+    };
+
+    function showStep(idx){
+      stepNames.forEach((name,i)=>{
+        document.getElementById(`${name}-section`).style.display=(i===idx ? '' : 'none');
+        document.querySelector(`.step[data-step='${name}']`).classList.toggle('active',i===idx);
+      });
+      if(idx===5){
+        updateSummary();
+      }
+    }
+
+    function nextStep(){
+      if(currentStep<stepNames.length-1){currentStep++; showStep(currentStep);}
+    }
+
+    function prevStep(){
+      if(currentStep>0){currentStep--; showStep(currentStep);}
+    }
+
+    document.getElementById('stepper').addEventListener('click', e=>{
+      const stepAttr = e.target.getAttribute('data-step');
+      if(stepAttr){
+        const idx=stepNames.indexOf(stepAttr);
+        if(idx!==-1){
+          currentStep=idx;
+          showStep(currentStep);
+        }
+      }
+    });
+
+    function clearSectionSelection(section) {
+      document.querySelectorAll(`#${section}-section .option-card`).forEach(card=>card.classList.remove('selected'));
+    }
+    function handleCardSelect(card,category){
+      if(category==="Bases"||category==="Proteins"){
+        clearSectionSelection(category);
+        card.classList.add('selected');
+        selections[category]={
+          name:card.dataset.name,
+          price:parseFloat(card.dataset.price)
+        };
+        nextStep();
+      } else {
+        // multi-pick
+        if(!selections[category]) selections[category]=[];
+        card.classList.toggle('selected');
+        if(card.classList.contains('selected')){
+          selections[category].push({name:card.dataset.name,price:parseFloat(card.dataset.price)});
+        }else{
+          selections[category]=selections[category].filter(x=>x.name!==card.dataset.name);
+        }
+      }
+      updateSummary();
+    }
+    document.querySelectorAll('.option-card').forEach(card=>{
+      const category=card.parentNode.getAttribute('data-category');
+      card.addEventListener('click',()=>handleCardSelect(card,category));
+      card.addEventListener('keydown',e=>{if(e.key==="Enter"||e.key===" "){handleCardSelect(card,category);}});
+    });
+
+    function updateSummary(){
+      const list=document.getElementById('summaryList');
+      list.innerHTML='';
+      let total=0;
+      if(selections.Bases){
+        list.innerHTML+=`<li>Bases: <span>${selections.Bases.name} ($${selections.Bases.price.toFixed(2)})</span></li>`;
+        total+=selections.Bases.price;
+      }
+      if(selections.Proteins){
+        list.innerHTML+=`<li>Proteins: <span>${selections.Proteins.name} ($${selections.Proteins.price.toFixed(2)})</span></li>`;
+        total+=selections.Proteins.price;
+      }
+      if(selections.Sides.length){
+        selections.Sides.forEach(x=>{
+          list.innerHTML+=`<li>Sides: <span>${x.name} ($${x.price.toFixed(2)})</span></li>`;
+          total+=x.price;
+        });
+      }
+      if(selections.Toppings.length){
+        selections.Toppings.forEach(x=>{
+          list.innerHTML+=`<li>Toppings: <span>${x.name} ($${x.price.toFixed(2)})</span></li>`;
+          total+=x.price;
+        });
+      }
+      if(selections.Sauces.length){
+        selections.Sauces.forEach(x=>{
+          list.innerHTML+=`<li>Sauces: <span>${x.name} ($${x.price.toFixed(2)})</span></li>`;
+          total+=x.price;
+        });
+      }
+      document.getElementById('summaryPrice').textContent=total.toFixed(2);
+    }
+    document.getElementById('checkoutBtn').onclick=function(){
+      alert("Thank you! Your healthy bowl is ready. Total: $"+document.getElementById('summaryPrice').textContent);
+    };
+    showStep(currentStep);
+  </script>
+</body>
+</html>
