@@ -2969,7 +2969,7 @@ img.u-pull-left {
     background-clip: text;
     -webkit-background-clip: text;
 
-    border-bottom: 1.5px solid #424241;
+    /* border-bottom: 1.5px solid #424241; */
 
     transition: all 0.4s ease-in-out;
 }

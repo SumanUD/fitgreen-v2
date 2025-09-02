@@ -642,3 +642,75 @@ document.addEventListener("DOMContentLoaded", () => {
   showSlide(current);
   startAutoplay();
 });
+
+
+
+// Home Products
+
+
+function eliteSwitchTab(evt, tabId) {
+    const section = evt.currentTarget.closest('.elite-bowls-section');
+    // handle tab buttons
+    const buttons = section.querySelectorAll('.tab-button');
+    buttons.forEach(btn => {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+      btn.setAttribute('tabindex', '-1');
+    });
+    evt.currentTarget.classList.add('active');
+    evt.currentTarget.setAttribute('aria-selected', 'true');
+    evt.currentTarget.setAttribute('tabindex', '0');
+    evt.currentTarget.focus();
+    // handle tab content
+    const contents = section.querySelectorAll('.tab-content');
+    contents.forEach(c => {
+      c.classList.remove('active');
+      c.setAttribute('aria-hidden', 'true');
+    });
+    const activeContent = section.querySelector(`#${tabId}`);
+    activeContent.classList.add('active');
+    activeContent.setAttribute('aria-hidden', 'false');
+  }
+
+  // Ingredient sub-tabs switcher
+  function switchIngredientTab(evt, tabId) {
+    const container = evt.currentTarget.closest('#custom-tab');
+    // buttons
+    const buttons = container.querySelectorAll('.ingredient-btn');
+    buttons.forEach(btn => {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+      btn.setAttribute('tabindex', '-1');
+    });
+    evt.currentTarget.classList.add('active');
+    evt.currentTarget.setAttribute('aria-selected', 'true');
+    evt.currentTarget.setAttribute('tabindex', '0');
+    evt.currentTarget.focus();
+    // content panels
+    const panels = container.querySelectorAll('.ingredient-tab-content');
+    panels.forEach(panel => {
+      panel.classList.remove('active');
+      panel.setAttribute('aria-hidden', 'true');
+    });
+    const activePanel = container.querySelector(`#${tabId}`);
+    activePanel.classList.add('active');
+    activePanel.setAttribute('aria-hidden', 'false');
+  }
+
+  // Slider functionality: scroll by card width on button click
+  function slideNext(containerId) {
+    const container = document.getElementById(containerId);
+    const slide = container.querySelector('.slide');
+    if (!slide) return;
+    const gap = 20;
+    const slideWidth = slide.offsetWidth + gap;
+    container.scrollBy({left: slideWidth, behavior: 'smooth'});
+  }
+  function slidePrev(containerId) {
+    const container = document.getElementById(containerId);
+    const slide = container.querySelector('.slide');
+    if (!slide) return;
+    const gap = 20;
+    const slideWidth = slide.offsetWidth + gap;
+    container.scrollBy({left: -slideWidth, behavior: 'smooth'});
+  }

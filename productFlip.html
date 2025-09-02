@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bowl Selection — Premium UI</title>
+  <style>
+    /* ====== FONT & RESET ====== */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    :root{
+      --bg1:#07060a; --bg2:#0f1115;
+      --glass: rgba(255,255,255,0.04);
+      --muted: #bfc3cc;
+      --accent1: #00e0ff;
+      --accent2: #ff4eb8;
+      --card-radius:16px;
+      --glass-border: rgba(255,255,255,0.06);
+      --glass-strong: rgba(255,255,255,0.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(12,16,20,0.7), transparent 8%),
+                  radial-gradient(800px 400px at 90% 90%, rgba(18,9,30,0.6), transparent 6%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:#e9eef3;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:36px;
+      min-height:100vh;
+    }
+
+    /* ====== LAYOUT ====== */
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+    }
+
+    header{
+      grid-column:1/-1;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:10px;
+    }
+
+    .brand{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+    .logo{
+      width:54px;height:54px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      box-shadow:0 6px 24px rgba(0,0,0,0.6), 0 0 18px rgba(0,224,255,0.06) inset;
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:#071019;font-size:18px;
+    }
+    h1{font-size:20px;margin:0;letter-spacing:-0.2px}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+
+    /* ====== TABS ====== */
+    .tabs{
+      display:flex;
+      gap:12px;
+      margin:18px 0 26px;
+    }
+    .tab-btn{
+      background:var(--glass);
+      border:1px solid var(--glass-border);
+      padding:10px 16px;border-radius:999px;color:var(--muted);
+      cursor:pointer;font-weight:600;font-size:13px;
+      backdrop-filter: blur(6px);
+    }
+    .tab-btn.active{
+      color:#071019;
+      background: linear-gradient(90deg,var(--accent1),var(--accent2));
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6), 0 8px 40px rgba(0,224,255,0.06);
+    }
+
+    /* ====== LEFT COLUMN (MAIN) ====== */
+    main{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:18px;
+      padding:22px;
+      border:1px solid var(--glass-border);
+      min-height:520px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+
+    /* Curated grid */
+    .curated-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+    }
+
+    /* Flip card container */
+    .flip-card{
+      perspective:1100px;
+      height:360px;
+    }
+    .flip-inner{
+      position:relative; width:100%; height:100%;
+      transform-style:preserve-3d;
+      transition: transform 0.75s cubic-bezier(.2,.9,.2,1);
+      border-radius:14px;
+    }
+    .flip-card:hover .flip-inner{ transform: rotateY(180deg) translateZ(0); }
+
+    .card-face{
+      position:absolute; inset:0; border-radius:14px; overflow:hidden;
+      backface-visibility:hidden; display:flex; flex-direction:column;
+      border:1px solid rgba(255,255,255,0.04);
+    }
+
+    /* front */
+    .card-front{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:12px; gap:10px;
+      justify-content:space-between;
+    }
+    .card-media{
+      flex:1; border-radius:12px; overflow:hidden; position:relative;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+      transition: transform 0.45s cubic-bezier(.2,.9,.2,1);
+    }
+    .card-media img{ width:100%; height:100%; object-fit:cover; display:block; transform-origin:center; }
+    .flip-card:hover .card-media{ transform: scale(1.03) rotateZ(-1deg); }
+
+    .card-info{ padding:12px; display:flex; align-items:center; justify-content:space-between; gap:10px }
+    .card-title{ font-weight:700; font-size:16px; color:#fff }
+    .card-sub{ font-size:13px; color:var(--muted) }
+
+    .price-order{
+      display:flex; gap:10px; align-items:center;
+    }
+    .price{
+      background:linear-gradient(90deg, rgba(0,0,0,0.45), rgba(255,255,255,0.02));
+      padding:8px 12px; border-radius:10px; font-weight:700; color:var(--accent1);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .order-btn{
+      padding:9px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#071019;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+
+    /* back */
+    .card-back{
+      transform: rotateY(180deg);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:18px; gap:12px; justify-content:flex-start;
+    }
+    .ingredients-title{ font-weight:800; font-size:15px; color: #fff; margin-bottom:6px }
+    .ing-list{ display:flex; flex-direction:column; gap:8px; max-height:230px; overflow:auto; padding-right:6px }
+    .ing-item{
+      display:flex; align-items:flex-start; gap:10px; background:rgba(255,255,255,0.02); padding:10px;border-radius:10px;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .ing-item b{ min-width:88px; display:inline-block; color:var(--muted); font-weight:700; font-size:13px }
+    .ing-desc{ color:var(--muted); font-size:13px; line-height:1.4 }
+
+    /* ====== RIGHT COLUMN (Sidebar) ====== */
+    aside{
+      position:relative;
+      border-radius:18px; padding:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid var(--glass-border);
+      height: min(82vh, 820px);
+    }
+
+    .panel-title{ font-weight:800; font-size:15px; margin-bottom:8px }
+    .order-panel{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+      border-radius:12px; padding:12px; border:1px solid rgba(255,255,255,0.02);
+      min-height:140px;
+    }
+
+    .order-items{ display:flex; flex-direction:column; gap:10px; margin-top:8px; max-height:280px; overflow:auto; padding-right:6px }
+    .order-row{ display:flex; align-items:center; justify-content:space-between; gap:12px }
+    .order-row .meta{ display:flex; gap:10px; align-items:center }
+    .qty{
+      display:flex; gap:6px; align-items:center; background:rgba(255,255,255,0.02);
+      padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)
+    }
+    .qty button{ border:none;background:transparent;color:var(--muted); cursor:pointer; font-weight:800 }
+    .total-row{ margin-top:12px; display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:16px }
+
+    .checkout-btn{
+      width:100%; margin-top:12px; padding:12px;border-radius:12px;border:none;font-weight:800;
+      background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:#071019; cursor:pointer;
+      box-shadow:0 12px 30px rgba(0,0,0,0.6);
+    }
+
+    /* ====== Make Your Own UI (in sidebar) ====== */
+    .carousel{
+      display:flex; gap:10px; align-items:center; overflow:auto; padding-bottom:8px;
+      margin-top:12px;
+    }
+    .bowl-chip{
+      min-width:120px; max-width:140px; height:120px; border-radius:14px; padding:12px;
+      display:flex; flex-direction:column; gap:8px; align-items:center; justify-content:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.02); cursor:pointer; transition:transform .25s;
+    }
+    .bowl-chip:hover{ transform:translateY(-6px) }
+    .bowl-chip.active{ box-shadow: 0 14px 40px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.04); }
+
+    .bowl-chip .icon{
+      width:48px;height:48px;border-radius:10px;background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:#071019;
+    }
+    .bowl-chip h4{ margin:0;font-size:13px; font-weight:700; text-align:center }
+
+    /* ingredient chips area */
+    .ingredients-area{
+      margin-top:14px;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .chips{
+      display:flex; flex-wrap:wrap; gap:8px;
+    }
+    .chip{
+      padding:8px 12px; border-radius:999px; background:rgba(255,255,255,0.02); color:var(--muted);
+      border:1px solid rgba(255,255,255,0.02); cursor:pointer; font-weight:600; font-size:13px;
+      transition:all .18s;
+    }
+    .chip.selected{ background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:#071019; box-shadow:0 10px 30px rgba(0,0,0,0.6) }
+
+    .preview{
+      margin-top:8px; padding:12px; border-radius:12px; background: linear-gradient(90deg, rgba(255,255,255,0.01), transparent);
+      border:1px solid rgba(255,255,255,0.02);
+    }
+
+    /* ====== SMALL SCREENS ====== */
+    @media (max-width: 980px){
+      .wrap{ grid-template-columns: 1fr; padding-bottom:100px }
+      aside{ order:2 }
+      main{ order:1; margin-bottom:18px }
+    }
+    @media (max-width: 520px){
+      .flip-card{height:310px}
+      .card-media img{ height:170px }
+    }
+
+    /* small utilities */
+    .muted{ color:var(--muted); font-size:13px }
+    .tiny{ font-size:12px; color:var(--muted) }
+    .ghost{ opacity:0.6 }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+
+    <header>
+      <div class="brand">
+        <div class="logo">B</div>
+        <div>
+          <h1>Bowl Selection</h1>
+          <p class="lead">Curated bowls & build-your-own — premium experience</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="tabs" role="tablist" aria-label="Main tabs">
+          <button class="tab-btn active" data-tab="curated" onclick="switchTab(event)">Curated Bowls</button>
+          <button class="tab-btn" data-tab="make" onclick="switchTab(event)">Make Your Own</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN / LEFT -->
+    <main id="main">
+      <!-- Curated content -->
+      <section id="curated" class="panel active">
+        <h2 style="font-size:18px;margin:0 0 12px">Chef's Curated Bowls</h2>
+        <p class="tiny muted">Hover a card to flip. Front has quick info + order — flip to see full ingredients.</p>
+
+        <div class="curated-grid" id="curatedGrid">
+          <!-- JS will populate the 7 curated bowls (flip-cards) -->
+        </div>
+      </section>
+
+      <!-- Make your own content (on main as well for wide screens) -->
+      <section id="make-your-own" class="panel" style="margin-top:22px; display:none">
+        <h2 style="font-size:18px;margin:0 0 8px">Create Your Bowl</h2>
+        <p class="tiny muted">Choose a bowl type to start (we prefill suggested ingredients), or Start Fresh.</p>
+
+        <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;">
+          <div style="flex:1; min-width:260px">
+            <div class="carousel" id="mainCarousel">
+              <!-- bowl chips -->
+            </div>
+
+            <div class="ingredients-area" id="mainIngredientsArea">
+              <div class="muted tiny">Selected Ingredients</div>
+              <div class="chips" id="mainChips"></div>
+
+              <div class="preview" id="mainPreview">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <div style="font-weight:800" id="previewName">Start Fresh</div>
+                    <div class="tiny muted" id="previewDesc">Pick base, protein, sides & sauce</div>
+                  </div>
+                  <div>
+                    <div class="price" id="previewPrice">₹ 0</div>
+                  </div>
+                </div>
+                <div style="margin-top:10px" id="previewList"></div>
+                <button class="order-btn" style="margin-top:12px;width:100%" onclick="orderCustom()">Order This Bowl</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- On wide screen re-show a gallery of bowls -->
+          <div style="flex:1; min-width:300px">
+            <div style="font-weight:800;margin-bottom:8px">All Bowl Types</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px">
+              <!-- small cards summarizing types -->
+              <div class="bowl-type-small" id="allTypesGrid"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- SIDEBAR / RIGHT -->
+    <aside>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="panel-title">Order Summary</div>
+        <div class="tiny muted">Your cart</div>
+      </div>
+
+      <div class="order-panel" id="orderPanel">
+        <div id="orderEmpty" class="tiny muted">No items in your order yet — add from Curated or Make Your Own.</div>
+        <div class="order-items" id="orderItems" style="display:none"></div>
+
+        <div class="total-row" id="orderTotals" style="display:none">
+          <div>Total</div>
+          <div id="orderTotal">₹ 0</div>
+        </div>
+
+        <button class="checkout-btn" id="checkoutBtn" style="display:none" onclick="checkout()">Checkout</button>
+      </div>
+
+      <div style="margin-top:18px">
+        <div class="panel-title">Make Your Own (Quick Pick)</div>
+        <div class="carousel" id="sidebarCarousel" aria-hidden="false">
+          <!-- sidebar chips populated by JS -->
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <script>
+    /****************************
+     * Data: curated bowls (7) *
+     ****************************/
+    const curatedBowls = [
+      {
+        id: 'power',
+        name: 'Power Bowl',
+        price: 349,
+        img: 'https://picsum.photos/600/420?food=11',
+        short: 'Protein powerhouse for recovery',
+        ingredients: [
+          {label:'Base', value:'Tri-Colour Quinoa'},
+          {label:'Proteins', value:'Herb-Grilled Chicken, Ajwain Fish Tikka'},
+          {label:'Sides', value:'Blanched Broccoli, Grilled Veggies, Roasted Beetroot, Avocado'},
+          {label:'Toppings', value:'Protein Seeds'},
+          {label:'Sauce', value:'Olive Oil Balsamic Dressing'}
+        ]
+      },
+      {
+        id: 'vitality',
+        name: 'Vitality Bowl',
+        price: 319,
+        img: 'https://picsum.photos/600/420?food=12',
+        short: 'Wholesome energizing bowl',
+        ingredients: [
+          {label:'Base', value:'Brown Rice'},
+          {label:'Protein', value:'Herb-Grilled Chicken'},
+          {label:'Sides', value:'Blanched Beans, Masala Corn, Edamame, Roasted Cauliflower'},
+          {label:'Toppings', value:'Pickled Onion'},
+          {label:'Sauce', value:'Tikka Masala'}
+        ]
+      },
+      {
+        id: 'harmony',
+        name: 'Harmony Bowl',
+        price: 299,
+        img: 'https://picsum.photos/600/420?food=13',
+        short: 'Gut-friendly superfoods',
+        ingredients: [
+          {label:'Base', value:'Mixed Greens'},
+          {label:'Protein', value:'Grilled Tofu'},
+          {label:'Sides', value:'Sprout Chaat, Roasted Beetroot, Blanched Beans, Mango & Arugula'},
+          {label:'Toppings', value:'Roasted Nuts'},
+          {label:'Sauce', value:'Olive Oil Balsamic Dressing'}
+        ]
+      },
+      {
+        id: 'lean',
+        name: 'Lean Bowl',
+        price: 329,
+        img: 'https://picsum.photos/600/420?food=14',
+        short: 'Light, nutrient-dense & satisfying',
+        ingredients: [
+          {label:'Base', value:'Whole Wheat Noodles'},
+          {label:'Protein', value:'Tandoori Chicken Tikka'},
+          {label:'Sides', value:'Grilled Veggies, Blanched Broccoli, Avocado, Masala Green Peas'},
+          {label:'Toppings', value:'Black Olives'},
+          {label:'Sauce', value:'Chilli Garlic Sauce'}
+        ]
+      },
+      {
+        id: 'sukoon',
+        name: 'Sukoon Bowl',
+        price: 299,
+        img: 'https://picsum.photos/600/420?food=15',
+        short: 'Comfort flavours with a healthy twist',
+        ingredients: [
+          {label:'Base', value:'White Basmati Rice'},
+          {label:'Protein', value:'Tandoori Chicken Tikka'},
+          {label:'Sides', value:'Grilled Veggies, Roasted Cauliflower, Masala Corn'},
+          {label:'Toppings', value:'Pickled Onion'},
+          {label:'Sauce', value:'Biryani-Style Gravy'}
+        ]
+      },
+      {
+        id: 'sabzi',
+        name: 'Sabzi Bowl',
+        price: 289,
+        img: 'https://picsum.photos/600/420?food=16',
+        short: 'All-veg hearty medley',
+        ingredients: [
+          {label:'Base', value:'Tri-Colour Quinoa'},
+          {label:'Proteins', value:'Paneer Tikka, Grilled Tofu'},
+          {label:'Sides', value:'Blanched Broccoli, Roasted Beetroot, Masala Green Peas, Mango & Arugula'},
+          {label:'Toppings', value:'Protein Seeds'},
+          {label:'Sauce', value:'Thai Green Curry'}
+        ]
+      },
+      {
+        id: 'utsav',
+        name: 'Utsav Bowl',
+        price: 339,
+        img: 'https://picsum.photos/600/420?food=17',
+        short: 'Festive desi flavours',
+        ingredients: [
+          {label:'Base', value:'Brown Rice'},
+          {label:'Protein', value:'Herb-Grilled Chicken'},
+          {label:'Sides', value:'Saute Beans, Roasted Cauliflower, Sprout Chaat'},
+          {label:'Toppings', value:'Roasted Garlic Flakes'},
+          {label:'Sauce', value:'Bengali Mustard Sauce'}
+        ]
+      }
+    ];
+
+    /****************************
+     * Render curated flip cards
+     ****************************/
+    const curatedGrid = document.getElementById('curatedGrid');
+
+    function renderCurated(){
+      curatedGrid.innerHTML = '';
+      curatedBowls.forEach(b => {
+        const dom = document.createElement('div');
+        dom.className = 'flip-card';
+        dom.innerHTML = `
+          <div class="flip-inner">
+            <div class="card-face card-front">
+              <div class="card-media"><img src="${b.img}" alt="${escapeHtml(b.name)}"></div>
+              <div class="card-info">
+                <div>
+                  <div class="card-title">${escapeHtml(b.name)}</div>
+                  <div class="card-sub tiny muted">${escapeHtml(b.short)}</div>
+                </div>
+                <div class="price-order">
+                  <div class="price">₹ ${b.price}</div>
+                  <button class="order-btn" onclick="orderCurated('${b.id}', event)">Order</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-face card-back">
+              <div>
+                <div class="ingredients-title">Ingredients</div>
+                <div class="ing-list">
+                  ${b.ingredients.map(it => `
+                    <div class="ing-item">
+                      <b>${escapeHtml(it.label)}:</b>
+                      <div class="ing-desc">${escapeHtml(it.value)}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        curatedGrid.appendChild(dom);
+      });
+    }
+
+    // small HTML escape helper
+    function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    renderCurated();
+
+    /****************************
+     * Order logic & UI updates
+     ****************************/
+    let cart = {}; // id -> {id, name, price, qty}
+
+    function updateOrderPanel(){
+      const orderItems = document.getElementById('orderItems');
+      const orderEmpty = document.getElementById('orderEmpty');
+      const orderTotals = document.getElementById('orderTotals');
+      const checkoutBtn = document.getElementById('checkoutBtn');
+
+      const entries = Object.values(cart);
+      if(entries.length === 0){
+        orderEmpty.style.display = 'block';
+        orderItems.style.display = 'none';
+        orderTotals.style.display = 'none';
+        checkoutBtn.style.display = 'none';
+        return;
+      }
+      orderEmpty.style.display = 'none';
+      orderItems.style.display = 'block';
+      orderItems.innerHTML = '';
+
+      let total = 0;
+      entries.forEach(item => {
+        total += item.price * item.qty;
+        const row = document.createElement('div');
+        row.className = 'order-row';
+        row.innerHTML = `
+          <div class="meta">
+            <div style="width:44px;height:44px;border-radius:8px;background:linear-gradient(90deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#071019">${item.name[0]}</div>
+            <div>
+              <div style="font-weight:700">${escapeHtml(item.name)}</div>
+              <div class="tiny muted">₹ ${item.price}</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <div class="qty">
+              <button onclick="changeQty('${item.id}', -1)">−</button>
+              <div style="padding:0 8px">${item.qty}</div>
+              <button onclick="changeQty('${item.id}', 1)">+</button>
+            </div>
+            <div class="tiny muted">₹ ${item.price * item.qty}</div>
+          </div>
+        `;
+        orderItems.appendChild(row);
+      });
+
+      document.getElementById('orderTotal').innerText = '₹ ' + total;
+      orderTotals.style.display = 'flex';
+      checkoutBtn.style.display = 'block';
+    }
+
+    function changeQty(id, delta){
+      if(!cart[id]) return;
+      cart[id].qty += delta;
+      if(cart[id].qty <= 0) delete cart[id];
+      updateOrderPanel();
+    }
+
+    // Called when user clicks "Order" on a curated bowl
+    function orderCurated(id, evt){
+      evt.stopPropagation();
+      const bowl = curatedBowls.find(b => b.id === id);
+      if(!bowl) return;
+      if(!cart[id]) cart[id] = { id: bowl.id, name: bowl.name, price: bowl.price, qty: 0 };
+      cart[id].qty += 1;
+      updateOrderPanel();
+      flashButton(evt.currentTarget || evt.target);
+    }
+
+    function flashButton(btn){
+      const old = btn.innerHTML;
+      btn.innerHTML = 'Added ✓';
+      btn.disabled = true;
+      setTimeout(()=>{ btn.innerHTML = old; btn.disabled = false; },900);
+    }
+
+    function checkout(){
+      const items = Object.values(cart);
+      if(items.length === 0) return alert('Cart is empty');
+      // For demo, just show a summary
+      const summary = items.map(it => `${it.qty} x ${it.name} — ₹ ${it.price * it.qty}`).join('\n');
+      alert('Order placed!\n\n' + summary + '\n\nTotal: ' + document.getElementById('orderTotal').innerText);
+      cart = {}; updateOrderPanel();
+    }
+
+    /****************************
+     * Tabs switching (main)
+     ****************************/
+    function switchTab(evt){
+      const tab = evt.currentTarget.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      evt.currentTarget.classList.add('active');
+
+      document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+      if(tab === 'curated'){
+        document.getElementById('curated').style.display = 'block';
+      } else {
+        document.getElementById('make-your-own').style.display = 'block';
+      }
+    }
+
+    /****************************
+     * Make Your Own: bowl types carousel
+     ****************************/
+    const sidebarCarousel = document.getElementById('sidebarCarousel');
+    const mainCarousel = document.getElementById('mainCarousel');
+    const allTypesGrid = document.getElementById('allTypesGrid'); // will be inner content
+    const mainChips = document.getElementById('mainChips');
+    const previewName = document.getElementById('previewName');
+    const previewDesc = document.getElementById('previewDesc');
+    const previewPrice = document.getElementById('previewPrice');
+    const previewList = document.getElementById('previewList');
+
+    // For Make Your Own, create a flattened ingredient set per bowl
+    const bowlTypes = curatedBowls.map(b => {
+      // Flatten values into tokens for selection chips
+      const tokens = [];
+      b.ingredients.forEach(it => {
+        // split comma separated values
+        it.value.split(',').map(s => s.trim()).forEach(tok => {
+          if(tok) tokens.push({label: tok, group: it.label});
+        });
+      });
+      return {
+        id: b.id,
+        name: b.name,
+        short: b.short,
+        price: b.price,
+        tokens: tokens
+      };
+    });
+
+    // Add a Start Fresh option
+    bowlTypes.unshift({
+      id: 'fresh',
+      name: 'Start Fresh',
+      short: 'Build from scratch',
+      price: 249,
+      tokens: []
+    });
+
+    function initCarousels(){
+      // Sidebar & main carousel
+      [sidebarCarousel, mainCarousel].forEach(c => c.innerHTML = '');
+      bowlTypes.forEach(bt => {
+        const chip = document.createElement('div');
+        chip.className = 'bowl-chip';
+        chip.dataset.id = bt.id;
+        chip.onclick = () => selectBowlType(bt.id);
+        chip.innerHTML = `
+          <div class="icon">${bt.name[0]}</div>
+          <div style="font-weight:700;font-size:13px;text-align:center">${escapeHtml(bt.name)}</div>
+          <div class="tiny muted" style="font-size:12px">${escapeHtml(bt.short)}</div>
+        `;
+        mainCarousel.appendChild(chip);
+
+        const sChip = chip.cloneNode(true);
+        sChip.onclick = () => selectBowlType(bt.id);
+        sidebarCarousel.appendChild(sChip);
+
+        // also populate small grid on right
+        const small = document.createElement('div');
+        small.className = 'bowl-chip';
+        small.style.height = '100px';
+        small.onclick = () => { selectBowlType(bt.id); window.scrollTo({top:0,behavior:'smooth'}) };
+        small.innerHTML = `<div class="icon">${bt.name[0]}</div><h4>${escapeHtml(bt.name)}</h4>`;
+        allTypesGrid.appendChild(small);
+      });
+
+      // Mark 'Start Fresh' selected initially
+      selectBowlType('fresh', {silent:true});
+    }
+
+    // Currently selected chips (set)
+    let selectedTokens = []; // array of {label, group}
+
+    function selectBowlType(id, opts = {}){
+      // clear active classes
+      document.querySelectorAll('.bowl-chip').forEach(el => el.classList.remove('active'));
+      // mark all with matching data-id
+      document.querySelectorAll(`.bowl-chip[data-id="${id}"]`).forEach(el => el.classList.add('active'));
+
+      const bt = bowlTypes.find(b => b.id === id);
+      if(!bt) return;
+
+      // set preview name, price
+      previewName.innerText = bt.name;
+      previewDesc.innerText = bt.short;
+      previewPrice.innerText = '₹ ' + bt.price;
+
+      // if fresh -> empty selection; else prefill suggestions
+      if(bt.id === 'fresh'){
+        selectedTokens = []; // maybe add base suggestions? we keep empty
+      } else {
+        selectedTokens = [...bt.tokens]; // copy suggestions
+      }
+      renderChips();
+      if(!opts.silent) {
+        // open make-your-own tab
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('.tab-btn[data-tab="make"]').classList.add('active');
+        document.getElementById('curated').style.display = 'none';
+        document.getElementById('make-your-own').style.display = 'block';
+      }
+    }
+
+    function renderChips(){
+      mainChips.innerHTML = '';
+      if(selectedTokens.length === 0){
+        mainChips.innerHTML = '<div class="tiny muted">No suggestions — pick ingredients below or add manually.</div>';
+      } else {
+        // ensure uniqueness by label
+        const uniq = [];
+        selectedTokens.forEach(t => {
+          if(!uniq.some(u => u.label === t.label)) uniq.push(t);
+        });
+        uniq.forEach(tok => {
+          const ch = document.createElement('div');
+          ch.className = 'chip selected';
+          ch.innerText = tok.label;
+          ch.onclick = () => toggleToken(tok.label);
+          mainChips.appendChild(ch);
+        });
+      }
+
+      // also update preview list
+      updatePreview();
+    }
+
+    function toggleToken(label){
+      const idx = selectedTokens.findIndex(t => t.label === label);
+      if(idx >= 0){
+        selectedTokens.splice(idx,1);
+      } else {
+        selectedTokens.push({label, group:'Extra'});
+      }
+      renderChips();
+    }
+
+    // For custom ordering: click order button in preview
+    function orderCustom(){
+      const name = previewName.innerText || 'Custom Bowl';
+      const price = Number(previewPrice.innerText.replace(/[^\d]/g,'')) || 0;
+      // add to cart with a generated id
+      const id = 'custom-'+Date.now();
+      cart[id] = { id, name, price, qty: 1, extras: selectedTokens.map(t => t.label) };
+      updateOrderPanel();
+      alert('Custom bowl added to cart: ' + name);
+    }
+
+    function updatePreview(){
+      const pList = previewList;
+      pList.innerHTML = '';
+      if(selectedTokens.length === 0){
+        pList.innerHTML = '<div class="tiny muted">No ingredients selected yet</div>';
+        return;
+      }
+      const uniq = [];
+      selectedTokens.forEach(t => { if(!uniq.includes(t.label)) uniq.push(t.label) });
+      const ul = document.createElement('div');
+      ul.style.display = 'flex'; ul.style.flexDirection = 'column'; ul.style.gap = '6px';
+      uniq.forEach(l => {
+        const row = document.createElement('div');
+        row.className = 'tiny';
+        row.innerHTML = '• ' + escapeHtml(l);
+        ul.appendChild(row);
+      });
+      pList.appendChild(ul);
+    }
+
+    /****************************
+     * Order a curated bowl from Make Your Own preview
+     ****************************/
+    function orderCuratedFromPreview(id){
+      // alias for consistency
+      orderCurated(id, { currentTarget: null, stopPropagation(){}}); // won't work for UI flash, used simpler
+    }
+
+    /****************************
+     * Utility: Add safety for onclick inside card when order is clicked
+     ****************************/
+    document.addEventListener('click', e => {
+      // if click on order button we already handled
+    });
+
+    /****************************
+     * Init render
+     ****************************/
+    initCarousels();
+    updateOrderPanel();
+
+    // when the curated grid is clicked (flip happens on hover), prevent ordering when clicking back
+    // but that's handled by event.stopPropagation inside orderCurated
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthy Menu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .menu-item {
+      background: white;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .menu-item h2 {
+      margin: 0 0 10px;
+    }
+    .menu-item button {
+      padding: 8px 15px;
+      background: #0b6b4f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .menu-item button:hover {
+      background: #09523d;
+    }
+    .order-details {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      border-top: 1px solid #eee;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Healthy Menu</h1>
+
+  <div class="menu-item">
+    <h2>Power Bowl</h2>
+    <button onclick="toggleOrder(this)">Order</button>
+    <div class="order-details">
+      <strong>Base:</strong> Tri-Colour Quinoa <br>
+      <strong>Proteins:</strong> Herb-Grilled Chicken + Ajwain Fish Tikka <br>
+      <strong>Sides:</strong> Blanched Broccoli, Grilled Veggies, Roasted Beetroot, Avocado <br>
+      <strong>Toppings:</strong> Protein Seeds <br>
+      <strong>Sauce:</strong> Olive Oil Balsamic Dressing
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <h2>Energy Wrap</h2>
+    <button onclick="toggleOrder(this)">Order</button>
+    <div class="order-details">
+      <strong>Base:</strong> Whole Wheat Wrap <br>
+      <strong>Proteins:</strong> Tandoori Paneer <br>
+      <strong>Sides:</strong> Lettuce, Onion, Tomato <br>
+      <strong>Toppings:</strong> Flax Seeds <br>
+      <strong>Sauce:</strong> Mint Yogurt Dip
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <h2>Detox Salad</h2>
+    <button onclick="toggleOrder(this)">Order</button>
+    <div class="order-details">
+      <strong>Base:</strong> Fresh Greens <br>
+      <strong>Proteins:</strong> Grilled Tofu <br>
+      <strong>Sides:</strong> Cucumber, Carrot, Sprouts <br>
+      <strong>Toppings:</strong> Chia Seeds <br>
+      <strong>Sauce:</strong> Lemon Herb Dressing
+    </div>
+  </div>
+
+  <script>
+    function toggleOrder(btn) {
+      const details = btn.nextElementSibling;
+      details.style.display = details.style.display === "block" ? "none" : "block";
+    }
+  </script>
+
+</body>
+</html>
