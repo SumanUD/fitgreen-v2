@@ -86,7 +86,7 @@
     box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
     display: flex;
     flex-direction: column;
-    background: #fff;
+    background: #bdf6ba;
   }
   .flip-card-front {
     z-index: 2;
@@ -248,8 +248,8 @@
 
 .ingredient-btn.active,
 .ingredient-btn:hover {
-  background: #bdf6ba;
-  color: black;
+  background: black;
+  color: #bdf6ba;
 }
 
 

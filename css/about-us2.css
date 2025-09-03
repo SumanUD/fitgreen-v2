@@ -1,0 +1,154 @@
+.about-us .page-banner{
+    width: 100%;
+    height: 600px;
+
+    /* background: gray; */
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.page-banner .banner-text-content{
+    padding-left: 10%;
+}
+.page-banner .banner-image{
+    position: absolute;
+    right: -10%;
+}
+.page-banner .banner-image img{    
+    /* height: 200px; */
+    width: 500px;
+    object-fit: cover;
+}
+.page-banner .banner-text-content p{
+    font-size: 4rem;
+    font-weight: 900;
+}
+.page-banner .banner-text-content p.red{
+    color: crimson;
+}
+
+
+
+
+.our-values {
+  font-family: "Raleway", sans-serif;
+  background: #fafafa;
+  padding: 60px 20px;
+}
+
+.our-values .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.our-values .values-heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.our-values .values-heading h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  position: relative;
+  display: inline-block;
+}
+
+.our-values .values-heading h2::after {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 60%;
+  background: #2ecc71;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.our-values .values-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.our-values .value-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.our-values .value-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.15);
+  background: linear-gradient(135deg, #ffffff, #f9fdfb);
+}
+
+/* Animated green border glow */
+.our-values .value-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 2px;
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.our-values .value-card:hover::after {
+  opacity: 1;
+}
+
+.our-values .value-header h3 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  /* margin-bottom: 15px; */
+  color: #27ae60;
+  position: relative;
+  padding-left: 15px;
+  margin-top: 0 !important;
+  transition: color 0.3s ease;
+}
+
+.our-values .value-header h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  height: 18px;
+  width: 4px;
+  background: #2ecc71;
+  border-radius: 2px;
+  transition: background 0.3s ease;
+}
+
+/* Hover text color + bar animation */
+.our-values .value-card:hover .value-header h3 {
+  color: #219150;
+}
+
+.our-values .value-card:hover .value-header h3::before {
+  background: #27ae60;
+}
+
+.our-values .value-body p {
+  font-size: 1.5rem;
+  line-height: 1.7;
+  color: #555;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.our-values .value-card:hover .value-body p {
+  color: #333;
+}

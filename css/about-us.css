@@ -28,6 +28,28 @@
 .page-banner .banner-text-content p.red{
     color: crimson;
 }
+
+
+.green-left-style {
+    position: relative;
+    padding-left: 18px;          /* space for the bar */
+    font-size: 1.5rem;           /* adjust size */
+    line-height: 1.6;
+    color: #333;                 /* dark text for readability */
+    font-weight: 400;
+}
+
+.green-left-style::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #9BBA4C, #6e8c2c); /* modern green gradient */
+    border-radius: 2px;
+}
+
 .about-us-section{
     max-width: 1400px;
     width: 100%;

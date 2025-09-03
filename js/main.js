@@ -560,11 +560,11 @@ function typeEffect() {
     const pElements = container.querySelectorAll('p');
     
     // Hide all p's
-    pElements.forEach(p => p.style.opacity = 0);
+    pElements.forEach(p => p.style.display = "none");
     
     // Show only the current one
     const activeP = pElements[phraseIndex];
-    activeP.style.opacity = 1;
+    activeP.style.display = "block";
 
     if (isDeleting) {
         activeP.textContent = currentPhrase.substring(0, charIndex - 1);
