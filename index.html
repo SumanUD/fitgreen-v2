@@ -115,18 +115,19 @@
                         </a>
                     </div>
 
-                    <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
+                    <a class="s-header__menu-toggle" href="#0"><span>MENU</span></a>
                 </div> <!-- end s-header__block -->
 
                 <nav class="s-header__nav">
 
                     <ul class="s-header__menu-links">
 
-                        <li><a href="about-us.html" class="smoothscroll">About Us</a></li>
-                        <li><a href="#" class="smoothscroll">Menu</a></li>
-                        <li><a href="products.html" class="smoothscroll">Bowls</a></li>
+                        <li><a href="about-us.html" class="smoothscroll">ABOUT US</a></li>
+                        <li><a href="#" class="smoothscroll">MENU</a></li>
+                        <li><a href="products.html" class="smoothscroll">BOWLS</a></li>
                         <!-- <li><a href="/blogs.html" class="smoothscroll">Blogs</a></li> -->
-                        <li><a href="contact.html" class="smoothscroll">Contact</a></li>
+                        <li><a href="contact.html" class="smoothscroll">CONTACTS</a></li>
+                        <li class="order-btn"><a href="#" class="smoothscroll">ORDER NOW</a></li>
 
                     </ul> <!-- s-header__menu-links -->
 
@@ -305,14 +306,21 @@
 
 
 
-            <!-- about
+            <!-- Product Section
             ----------------------------------------------- -->
-            <section id="about" class="s-about target-section mb-5">
+            <section id="about" class="s-products target-section mb-5">
+                                
+
 
                 <div class="row section-header" data-num="+ Our Bowls">
+                    <div class="column lg-12 stack-on-1100">
+                        <p class="mt-5">
+                            Need a one liner for Products to explain the diff between curated and custom
+                        </p>
+                    </div>
                     <section class="elite-bowls-section" aria-label="Elite Bowls Product and Ingredient Selection">
                         <main class="container" role="main" aria-label="Elite bowls menu with tabs">
-                            <br /><br />
+                            <!-- <br /><br /> -->
 
                             <nav class="tabs" role="tablist" aria-label="Bowl menu tabs">
                                 <button role="tab" aria-selected="true" aria-controls="curated-tab" id="curated-tab-btn"
@@ -324,7 +332,7 @@
                             </nav>
 
                             <section id="curated-tab" role="tabpanel" tabindex="0" aria-labelledby="curated-tab-btn"
-                                class="tab-content active" style="width: 1000px;">
+                                class="tab-content active">
 
                                 <div id="curated-slider-container" class="slider-container"
                                     aria-label="Curated bowls slider">
@@ -576,25 +584,57 @@
 
 
                             <section id="custom-tab" role="tabpanel" tabindex="0" aria-labelledby="custom-tab-btn"
-                                class="tab-content" aria-hidden="true" style="width: 1000px;">
+                                class="tab-content" aria-hidden="true">
 
-                                <nav class="ingredient-tabs" role="tablist" aria-label="Ingredient sub-tabs">
-                                    <button role="tab" aria-selected="true" aria-controls="bases" id="btn-bases"
-                                        tabindex="0" class="ingredient-btn active"
-                                        onclick="switchIngredientTab(event, 'bases')">Bases</button>
-                                    <button role="tab" aria-selected="false" aria-controls="proteins" id="btn-proteins"
-                                        tabindex="-1" class="ingredient-btn"
-                                        onclick="switchIngredientTab(event, 'proteins')">Proteins</button>
-                                    <button role="tab" aria-selected="false" aria-controls="sides" id="btn-sides"
-                                        tabindex="-1" class="ingredient-btn"
-                                        onclick="switchIngredientTab(event, 'sides')">Sides</button>
-                                    <button role="tab" aria-selected="false" aria-controls="toppings" id="btn-toppings"
-                                        tabindex="-1" class="ingredient-btn"
-                                        onclick="switchIngredientTab(event, 'toppings')">Toppings</button>
-                                    <button role="tab" aria-selected="false" aria-controls="sauces" id="btn-sauces"
-                                        tabindex="-1" class="ingredient-btn"
-                                        onclick="switchIngredientTab(event, 'sauces')">Sauces & Dressings</button>
-                                </nav>
+                               <nav class="ingredient-tabs" role="tablist" aria-label="Ingredient sub-tabs">
+  <button role="tab" aria-selected="true" aria-controls="bases" id="btn-bases"
+    tabindex="0" class="ingredient-btn active"
+    onclick="switchIngredientTab(event, 'bases')">
+    <span class="icon">
+      <!-- Example rice bowl SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+        viewBox="0 0 24 24">
+        <path d="M12 3a9 9 0 0 0-9 9c0 4.97 9 9 9 9s9-4.03 9-9a9 9 0 0 0-9-9z"/>
+      </svg>
+    </span>
+    <span class="label">Bases</span>
+  </button>
+
+  <button role="tab" aria-selected="false" aria-controls="proteins" id="btn-proteins"
+    tabindex="-1" class="ingredient-btn"
+    onclick="switchIngredientTab(event, 'proteins')">
+    <span class="icon">
+      <!-- Example protein/meat icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+        viewBox="0 0 24 24">
+        <path d="M21 7L9 19l-5.5-5.5L6 12l3 3L19 5l2 2z"/>
+      </svg>
+    </span>
+    <span class="label">Proteins</span>
+  </button>
+
+  <button role="tab" aria-selected="false" aria-controls="sides" id="btn-sides"
+    tabindex="-1" class="ingredient-btn"
+    onclick="switchIngredientTab(event, 'sides')">
+    <span class="icon">🥗</span>
+    <span class="label">Sides</span>
+  </button>
+
+  <button role="tab" aria-selected="false" aria-controls="toppings" id="btn-toppings"
+    tabindex="-1" class="ingredient-btn"
+    onclick="switchIngredientTab(event, 'toppings')">
+    <span class="icon">🌿</span>
+    <span class="label">Toppings</span>
+  </button>
+
+  <button role="tab" aria-selected="false" aria-controls="sauces" id="btn-sauces"
+    tabindex="-1" class="ingredient-btn"
+    onclick="switchIngredientTab(event, 'sauces')">
+    <span class="icon">🥫</span>
+    <span class="label">Sauces & Dressings</span>
+  </button>
+</nav>
+
 
                                 <!-- Each ingredient group slider -->
                                 <div id="bases" role="tabpanel" tabindex="0" aria-labelledby="btn-bases"

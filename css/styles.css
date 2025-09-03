@@ -784,6 +784,10 @@ textarea {
     width : 100%;
 }
 
+.elite-bowls-section {
+    width: 100%;
+}
+
 /* --------------------------------------------------------------------
  * ## medium screen devices 
  * -------------------------------------------------------------------- */
@@ -2891,7 +2895,7 @@ img.u-pull-left {
   margin: 2rem auto;
   max-width: 700px;
   font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
-  line-height: 1.6;
+  line-height: 3.85;
 }
 
 .health-stats li {
@@ -3271,7 +3275,7 @@ img.u-pull-left {
 .s-header__menu-links a {
     display             : block;
     font-family         : var(--font-2);
-    font-size           : 2.3rem;
+    font-size           : 1.9rem;
     font-weight         : 400;
     line-height         : var(--vspace-1);
     color               : #000000;
@@ -3281,6 +3285,24 @@ img.u-pull-left {
 
 .s-header__menu-links .current a {
     color : #779864;
+}
+
+.order-btn {
+    border: 1px solid black;
+    margin-left: 20px;
+}
+
+.order-btn:hover {
+    background-color: #000;
+    a {
+
+        color : #779864;
+    }
+
+}
+
+.order-btn a {
+    font-size: 1.4rem;
 }
 
 /* --------------------------------------------------------------------
@@ -3652,7 +3674,7 @@ img.u-pull-left {
     top: var(--content-padding-top);
     right: var(--gutter);
     bottom: var(--content-padding-bottom);
-    width: 650px;
+    width: 550px;
     height: auto;
     overflow: hidden;
 }
@@ -5060,7 +5082,7 @@ img.u-pull-left {
 }
 
 .faq-list {
-    max-width: 60%;
+    max-width: 78%;
     margin: 0 auto;
 }
 

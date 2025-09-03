@@ -16,7 +16,7 @@
   }
   .tab-button.active {
     color: #0c5f56;
-    border-color: #f09e00;
+    border-color: #bdf6ba;
   }
   .tab-content {
     display: none;
@@ -34,11 +34,12 @@
   /* Slider Container with horizontal scroll */
   .slider-container {
     position: relative;
-    overflow-x: auto;
+    overflow-y: hidden;
     scroll-behavior: smooth;
-    max-width: 1000px;
+    /* max-width: 1000px; */
     margin: 0 auto;
     scroll-snap-type: x mandatory;
+    height: 460px;
   }
   .slider-track {
     display: flex;
@@ -145,14 +146,15 @@
   .flip-card-back h3 {
     margin-bottom: 1.2rem;
     font-weight: 900;
-    font-size: 1.45rem;
+    /* font-size: 1.45rem; */
     letter-spacing: -0.01em;
+    margin-top: 0 !important;
   }
   .ingredients-list {
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 1.5rem;
     line-height: 1.6;
-    border-left: 3px solid #f09e00;
+    border-left: 3px solid #bdf6ba;
     padding-left: 1rem;
     user-select: none;
     margin-bottom: 2rem;
@@ -164,10 +166,10 @@
   }
   .order-button {
     align-self: stretch;
-    background: #f09e00;
+    background: #bdf6ba;
     color: #10211a;
     border: none;
-    padding: 14px 0;
+    /* padding: 14px 0; */
     border-radius: 8px;
     font-size: 1.13rem;
     font-weight: 700;
@@ -216,22 +218,40 @@
     margin-bottom: 2rem;
     user-select: none;
   }
-  .ingredient-btn {
-    padding: 10px 22px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: #35584e;
-    background: #e9f2f0;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  .ingredient-btn.active,
-  .ingredient-btn:hover {
-    background: #f09e00;
-    color: white;
-  }
+
+  
+.ingredient-btn {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #35584e;
+  background: #e9f2f0;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  color: black;
+
+  /* NEW */
+  display: inline-flex;      /* keeps icon + text inline */
+  align-items: center;       /* vertical alignment */
+  gap: 8px;                  /* space between icon and text */
+  padding: 10px 18px;        /* add spacing inside */
+}
+
+.ingredient-btn .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;         /* adjust icon size (emoji or svg) */
+  line-height: 1;
+}
+
+.ingredient-btn.active,
+.ingredient-btn:hover {
+  background: #bdf6ba;
+  color: black;
+}
+
 
   /* Ingredient tab slider container */
   .ingredient-tab-content {
@@ -259,3 +279,7 @@
     }
   }
 
+.s-products {
+  background-color: #bdf6ba;
+  padding-bottom: 60px;
+}
