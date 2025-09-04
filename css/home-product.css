@@ -5,6 +5,11 @@
     margin-bottom: 2rem;
     user-select: none;
   }
+
+.pt-0 {
+  padding-top: 0;
+}
+
   .tab-button {
     font-size: 1.25rem;
     font-weight: 700;
