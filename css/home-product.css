@@ -20,8 +20,8 @@
     transition: all 0.3s ease;
   }
   .tab-button.active {
-    color: #0c5f56;
-    border-color: #bdf6ba;
+    color: #bdf6ba;
+    background-color: #000;
   }
   .tab-content {
     display: none;

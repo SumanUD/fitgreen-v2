@@ -19,7 +19,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1rem;
+      /* padding: 1rem; */
       background: #000;
     }
 
@@ -103,7 +103,7 @@
     .cmp-scroller:after{ bottom:100%; }
 
     /* ===== NAVIGATION BTNS ===== */
-    .nav {
+    /* .nav {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -117,4 +117,4 @@
       z-index: 10;
     }
     .prev { left: 10px; }
-    .next { right: 10px; }
+    .next { right: 10px; } */
