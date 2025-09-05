@@ -5933,6 +5933,7 @@ img.u-pull-left {
 
     .rotating-text {
         top: 0;
+        height: 40px;
     }
 
     .rotating-text p {
@@ -5971,6 +5972,25 @@ img.u-pull-left {
 
     .s-header {
         top: 4.5rem;
+    }
+
+    .s-intro__content-buttons {
+        margin-top: -30px;
+    }
+
+    .health-stats {
+        margin-bottom: 40px;
+    }
+
+    .form-group label {
+        font-size: 1.3rem;
+    }
+
+    .btn--primary {
+        padding: 0 !important;
+    }
+    .form-group input, .form-group textarea {
+        font-size: 1.5rem;
     }
 
 }
