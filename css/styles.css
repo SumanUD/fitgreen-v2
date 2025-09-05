@@ -2779,7 +2779,7 @@ td:last-child {
     font-size      : var(--text-md);
     text-transform : uppercase;
     letter-spacing : .3em;
-    color          : var(--color-1);
+    /* color          : var(--color-1); */
     margin-top     : 0;
 }
 
@@ -2897,7 +2897,7 @@ img.u-pull-left {
 .health-stats {
   list-style: none; /* remove default bullets */
   padding: 0;
-  margin: 2rem auto;
+  /* margin: 2rem auto; */
   max-width: 700px;
   font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
   line-height: 3.85;
@@ -2940,12 +2940,9 @@ img.u-pull-left {
   }
 }
 
-
-
-
 .section-header__pretitle {
     margin-bottom : var(--vspace-1_5);
-    border-bottom: 3px solid;
+    /* border-bottom: 3px solid; */
     /* width: fit-content; */
 }
 
