@@ -2888,7 +2888,7 @@ img.u-pull-left {
 
 @media (max-width: 1099px) {
   .section-header__primary {
-    text-align: center;
+    /* text-align: center; */
   }
 }
 
@@ -3464,8 +3464,8 @@ img.u-pull-left {
 
 @media screen and (max-width: 800px) {
     .s-header {
-        --logo-width : 150px;
-        top          : var(--vspace-0_25);
+        /* --logo-width : 150px; */
+        /* top          : var(--vspace-0_25); */
     }
 
     .s-header__inner {
@@ -4009,7 +4009,7 @@ img.u-pull-left {
     }
 
     .s-header__inner {
-        margin-top: 30px;
+        /* margin-top: 30px; */
     }
 }
 
