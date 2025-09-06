@@ -17,32 +17,31 @@
 
    /* preloader
     * -------------------------------------------------- */
-    const ssPreloader = function() {
+const ssPreloader = function() {
 
-        const siteBody = document.querySelector('body');
-        const preloader = document.querySelector('#preloader');
-        if (!preloader) return;
+    const siteBody = document.querySelector('body');
+    const preloader = document.querySelector('#preloader');
+    if (!preloader) return;
 
-        html.classList.add('ss-preload');
-        
-        window.addEventListener('load', function() {
-            html.classList.remove('ss-preload');
-            html.classList.add('ss-loaded');
+    // show preload state
+    document.documentElement.classList.add('ss-preload');
 
-            preloader.addEventListener('transitionend', function afterTransition(e) {
-                if (e.target.matches('#preloader'))  {
-                    siteBody.classList.add('ss-show');
-                    e.target.style.display = 'none';
-                    preloader.removeEventListener(e.type, afterTransition);
-                }
-            });
-        });
+    // force hide after 2s
+    setTimeout(function() {
+        document.documentElement.classList.remove('ss-preload');
+        document.documentElement.classList.add('ss-loaded');
 
-        // window.addEventListener('beforeunload' , function() {
-        //     siteBody.classList.remove('ss-show');
-        // });
+        siteBody.classList.add('ss-show');
+        preloader.style.display = 'none';
+    }, 2000);
 
-    }; // end ssPreloader
+    // still clean up before unload (optional)
+    window.addEventListener('beforeunload' , function() {
+        siteBody.classList.remove('ss-show');
+    });
+
+};
+
 
 
    /* move header
